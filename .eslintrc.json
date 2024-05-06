@@ -1,3 +1,8 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [  "next/core-web-vitals",  "love"],
+  "rules": {
+    "semi": "off",
+    "@typescript-eslint/semi": ["error","always"],
+   "no-console":"warn"
+  }
 }
