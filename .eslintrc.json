@@ -1,8 +1,9 @@
 {
-  "extends": [  "next/core-web-vitals",  "love"],
+  "extends": ["next/core-web-vitals", "love", "prettier"],
   "rules": {
     "semi": "off",
-    "@typescript-eslint/semi": ["error","always"],
-   "no-console":"warn"
+    "@typescript-eslint/semi": ["error", "always"],
+    "no-console": "warn",
+    "@next/next/no-img-element": "off"
   }
 }
