@@ -1,7 +1,7 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -48,3 +48,12 @@
     --ring: 20.5 90.2% 48.2%;
   }
 }
+/* globals.css */
+main {
+  min-height: 100vh;
+}
+/*.transparent-background {
+  background-image: url('/main-background.jpg');
+  background-size: cover;
+  opacity: 0.7;/
+}*/
