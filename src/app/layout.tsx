@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@fontsource/lobster';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -15,7 +16,7 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang='es'>
-      <body className='mt-5 transparent-background'>
+      <body className='mt-5'>
         <Header />
         {children}
         <Footer />

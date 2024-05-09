@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button';
-export default function Home (): JSX.Element {
-  
+import KnowUs from '@/components/KnowUs';
+import HelpUs from '@/components/HelpUs';
+export default function Home(): JSX.Element {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className='flex  flex-col items-center  px-24'>
       <h1>main content</h1>
-         
-         
-         
-          <Button variant="default">Pulsar</Button>
+      <KnowUs />
+      <HelpUs />
+
+      <Button variant='default'>Pulsar</Button>
     </main>
   );
 }

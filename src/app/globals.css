@@ -52,6 +52,10 @@
 main {
   min-height: 100vh;
 }
+body {
+  font-family: 'Lobster', system-ui;
+}
+
 /*.transparent-background {
   background-image: url('/main-background.jpg');
   background-size: cover;
