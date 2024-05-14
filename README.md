@@ -1,7 +1,9 @@
 ## TODO
 
-arreglar el .env
-tipar la respuesta de la petición
+crear el loading y el error page
+crear el objeto API con los metodos de peticion list y getById
+✅ arreglar el .env
+❓ tipar la respuesta de la petición
 
 ## Getting Started
 

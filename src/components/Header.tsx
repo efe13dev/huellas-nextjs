@@ -7,17 +7,32 @@ function Header(): JSX.Element {
         src='./fido-logo-grande.jpeg'
         alt='logo'
       />
-      <h1 className='text-5xl font-bold font-sans'>FIDO</h1>
+      <h1 className='text-5xl font-bold font-sans ;'>FIDO</h1>
       <nav>
         <ul className='flex gap-8 text-xl'>
           <li>
-            <Link href='/'>Inicio</Link>
+            <Link
+              href='/'
+              className='link'
+            >
+              Inicio
+            </Link>
           </li>
           <li>
-            <Link href='/adoptions'>Adopciones</Link>
+            <Link
+              href='/adoptions'
+              className='link'
+            >
+              Adopciones
+            </Link>
           </li>
           <li>
-            <Link href='/contact'>Contacto</Link>
+            <Link
+              href='/contact'
+              className='link'
+            >
+              Contacto
+            </Link>
           </li>
         </ul>
       </nav>

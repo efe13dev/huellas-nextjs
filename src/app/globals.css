@@ -55,6 +55,12 @@ main {
 body {
   font-family: 'Lobster', system-ui;
 }
+h1 {
+  text-shadow: 1px 1px 5px rgba(69, 69, 69, 0.5);
+}
+.link:focus {
+  color: blue;
+}
 
 /*.transparent-background {
   background-image: url('/main-background.jpg');

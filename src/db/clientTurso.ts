@@ -1,4 +1,3 @@
-import { type AnimalType, type TursoDataResponse } from '@/types';
 import { createClient } from '@libsql/client';
 
 const client = createClient({
@@ -6,10 +5,8 @@ const client = createClient({
   authToken: process.env.TURSO_AUTH_TOKEN
 });
 
-export async function getAdoptions(): Promise<AnimalType[]> {
-  const allAdoptions: TursoDataResponse = await client.execute(
-    'SELECT * FROM animals'
-  );
+export async function getAdoptions(): Promise<any> {
+  const allAdoptions = await client.execute('SELECT * FROM animals');
   console.log(allAdoptions);
-  return allAdoptions.rows;
+  return allAdoptions;
 }
