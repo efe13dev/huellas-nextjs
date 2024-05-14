@@ -9,19 +9,10 @@ export interface AnimalType {
   type: string;
 }
 
-export interface AdoptionResultSet {
+export interface TursoDataResponse {
   columns: string[];
   columnTypes: string[];
-  rows: Array<{
-    id: number;
-    name: string;
-    age: number;
-    register_date: string;
-    adopted: number;
-    description: string;
-    photos: string;
-    type: string;
-  }>;
+  rows: AnimalType[];
   rowsAffected: number;
-  lastInsertRowid?: number;
+  lastInsertRowid: number | undefined;
 }

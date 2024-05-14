@@ -1,10 +1,10 @@
 import React from 'react';
-import { type AnimalType } from '@/types';
-import { getAdoptions } from '@/db/client';
+import { type TursoDataResponse } from '@/types';
+import { getAdoptions } from '@/db/clientTurso';
 
 async function Adoptions(): Promise<JSX.Element> {
-  const data = await getAdoptions();
-  const adoptions: AnimalType[] = data.rows;
+  const data: TursoDataResponse = await getAdoptions();
+  const adoptions = data.rows;
 
   return (
     <main>
