@@ -3,7 +3,7 @@ import { Button } from './ui/button';
 
 function HelpUs(): JSX.Element {
   return (
-    <section className='flex flex-col gap-12 lg:m-40 m-8 rounded-lg bg-slate-300 h-[50vh] p-6 text-xl justify-center items-center'>
+    <section className='flex flex-col gap-12 lg:m-40 m-8 rounded-lg bg-gradient-to-t from-transparent to-slate-500 h-[50vh] p-6 text-xl justify-center items-center'>
       <p className='text-pretty'>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora minima
         debitis dolorum, architecto quaerat eos quibusdam quos inventore,

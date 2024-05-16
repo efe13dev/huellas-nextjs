@@ -1,6 +1,8 @@
 ## TODO
 
-crear el loading y el error page
+arreglar el responsive y la imagen del tamaño
+crear la vista del detalle de la mascota
+✅crear el loading y el error page
 crear el objeto API con los metodos de peticion list y getById
 ✅ arreglar el .env
 ❓ tipar la respuesta de la petición

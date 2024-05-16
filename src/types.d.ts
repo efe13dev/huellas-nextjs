@@ -7,6 +7,7 @@ export interface AnimalType {
   description: string;
   photos?: string;
   type: string;
+  size?: string;
 }
 
 export interface TursoDataResponse {

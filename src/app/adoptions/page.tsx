@@ -32,9 +32,68 @@ async function Adoptions(): Promise<JSX.Element> {
               <CardDescription>{animal.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Card Content</p>
+              <div className='flex items-center lg:gap-4'>
+                <p>Tamaño:</p>
+                {animal.size === 'small' && (
+                  <>
+                    <img
+                      className='w-16'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-24 opacity-10'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-40 opacity-10'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                  </>
+                )}
+                {animal.size === 'medium' && (
+                  <>
+                    <img
+                      className='w-12 opacity-50'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-24 '
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-40 opacity-10'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                  </>
+                )}
+                {animal.size === 'big' && (
+                  <>
+                    <img
+                      className='w-12 opacity-10'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-24 opacity-10'
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                    <img
+                      className='w-40 '
+                      src='./size-image.jpg'
+                      alt=''
+                    />
+                  </>
+                )}
+              </div>
             </CardContent>
-            <CardFooter>
+            <CardFooter className='flex justify-between'>
               <Button>Ver más</Button>
             </CardFooter>
           </Card>
