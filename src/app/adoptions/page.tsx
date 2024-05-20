@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { type TursoDataResponse } from '@/types';
 import { getAdoptions } from '@/db/clientTurso';
 import {
@@ -32,23 +33,23 @@ async function Adoptions(): Promise<JSX.Element> {
               <CardDescription>{animal.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className='flex items-center lg:gap-4'>
-                <p>Tamaño:</p>
+              <div className='flex items-center lg:gap-1'>
+                <p className='pr-2'>Tamaño:</p>
                 {animal.size === 'small' && (
                   <>
                     <img
-                      className='w-16'
-                      src='./size-image.jpg'
+                      className='w-8'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-24 opacity-10'
-                      src='./size-image.jpg'
+                      className='w-16 opacity-10'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-40 opacity-10'
-                      src='./size-image.jpg'
+                      className='w-20 opacity-10'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                   </>
@@ -56,18 +57,18 @@ async function Adoptions(): Promise<JSX.Element> {
                 {animal.size === 'medium' && (
                   <>
                     <img
-                      className='w-12 opacity-50'
-                      src='./size-image.jpg'
+                      className='w-8 opacity-50'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-24 '
-                      src='./size-image.jpg'
+                      className='w-16 '
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-40 opacity-10'
-                      src='./size-image.jpg'
+                      className='w-20 opacity-10'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                   </>
@@ -75,18 +76,18 @@ async function Adoptions(): Promise<JSX.Element> {
                 {animal.size === 'big' && (
                   <>
                     <img
-                      className='w-12 opacity-10'
-                      src='./size-image.jpg'
+                      className='w-8 opacity-10'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-24 opacity-10'
-                      src='./size-image.jpg'
+                      className='w-16 opacity-10'
+                      src='./dog-size-card.png'
                       alt=''
                     />
                     <img
-                      className='w-40 '
-                      src='./size-image.jpg'
+                      className='w-20 '
+                      src='./dog-size-card.png'
                       alt=''
                     />
                   </>
@@ -94,7 +95,15 @@ async function Adoptions(): Promise<JSX.Element> {
               </div>
             </CardContent>
             <CardFooter className='flex justify-between'>
-              <Button>Ver más</Button>
+              <Link
+                href={`/adoptions/${animal.id}`}
+                passHref
+                prefetch={false}
+              >
+                <Button className='w-fit flex justify-center transition duration-300 ease-in-out hover:text-yellow-500'>
+                  Ver más
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
         ))}

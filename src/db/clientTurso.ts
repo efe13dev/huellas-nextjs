@@ -10,3 +10,12 @@ export async function getAdoptions(): Promise<any> {
 
   return allAdoptions;
 }
+
+export async function getOneAdoption(id: string): Promise<any> {
+  const adoption = await client.execute({
+    sql: 'SELECT * FROM animals WHERE id = ?',
+    args: [id]
+  });
+
+  return adoption;
+}
