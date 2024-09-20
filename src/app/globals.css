@@ -53,7 +53,7 @@ main {
   min-height: 100vh;
 }
 body {
-  font-family: 'Lobster', system-ui;
+  font-family: 'sans-serif', system-ui;
 }
 h1 {
   text-shadow: 1px 1px 5px rgba(69, 69, 69, 0.5);

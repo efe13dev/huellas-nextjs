@@ -10,7 +10,7 @@ async function AnimalPage({
 }): Promise<any> {
   const data = await getOneAdoption(params.id);
   const animal = data.rows[0];
-
+  console.log('hola');
   return (
     <main className='flex flex-col '>
       <img

@@ -18,8 +18,8 @@ async function Adoptions(): Promise<JSX.Element> {
 
   return (
     <main>
-      <h2 className='text-center text-2xl my-12'>
-        Lorem ipsum dolor sit amet.
+      <h2 className='text-center text-4xl font-bold my-16 text-primary'>
+        Encuentra a tu nuevo compañero
       </h2>
       <section className='grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 px-4 '>
         {animals.map((animal) => (

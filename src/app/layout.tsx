@@ -16,7 +16,7 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang='es'>
-      <body className='mt-5'>
+      <body className='mt-5' >
         <Header />
         {children}
         <Footer />
