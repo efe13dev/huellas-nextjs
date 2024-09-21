@@ -1,10 +1,12 @@
-import KnowUs from '@/components/KnowUs';
-import HelpUs from '@/components/HelpUs';
-export default function Home(): JSX.Element {
+import KnowUs from '@/components/KnowUs'
+import HelpUs from '@/components/HelpUs'
+export default function Component() {
   return (
-    <main className='flex  flex-col items-center  px-24 '>
-      <KnowUs />
-      <HelpUs />
-    </main>
-  );
+    <div className="min-h-screen bg-white">
+      <main className=" container mx-auto px-4 py-6 md:py-20">
+        <KnowUs />
+        <HelpUs />
+      </main>
+    </div>
+  )
 }

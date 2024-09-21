@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource-variable/onest": "^5.1.0",
     "@fontsource/lobster": "^5.0.20",
     "@libsql/client": "^0.6.0",
     "@radix-ui/react-slot": "^1.0.2",

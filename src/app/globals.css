@@ -53,7 +53,8 @@ main {
   min-height: 100vh;
 }
 body {
-  font-family: 'sans-serif', system-ui;
+  font-family: 'Onest Variable', sans-serif;
+  font-size: 1.1rem;
 }
 h1 {
   text-shadow: 1px 1px 5px rgba(69, 69, 69, 0.5);
@@ -62,8 +63,13 @@ h1 {
   color: blue;
 }
 
-/*.transparent-background {
-  background-image: url('/main-background.jpg');
-  background-size: cover;
-  opacity: 0.7;/
-}*/
+
+@keyframes colorChange {
+  0% { color: #4a5568; }  /* gray-700 */
+  50% { color: #2b6cb0; } /* blue-700 */
+  100% { color: #4a5568; } /* gray-700 */
+}
+
+.animate-color-change {
+  animation: colorChange 4s infinite;
+}
