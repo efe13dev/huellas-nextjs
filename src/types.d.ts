@@ -5,9 +5,9 @@ export interface AnimalType {
   register_date: string;
   adopted: boolean;
   description: string;
-  photos?: string;
+  photos: string;
   type: string;
-  size?: string;
+  size: string;
 }
 
 export interface TursoDataResponse {
