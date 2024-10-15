@@ -1,7 +1,7 @@
 export interface AnimalType {
   id: string;
   name: string;
-  age: number;
+  age: string;
   register_date: string;
   adopted: boolean;
   description: string;

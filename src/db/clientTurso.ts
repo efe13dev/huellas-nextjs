@@ -6,9 +6,11 @@ const client = createClient({
 });
 
 export async function getAdoptions(): Promise<any> {
-  const allAdoptions = await client.execute('SELECT * FROM animals ');
+  const availableAdoptions = await client.execute(
+    'SELECT * FROM animals WHERE adopted = 0 ORDER BY register_date DESC'
+  );
 
-  return allAdoptions;
+  return availableAdoptions;
 }
 
 export async function getOneAdoption(id: string): Promise<any> {

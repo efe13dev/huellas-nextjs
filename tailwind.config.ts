@@ -18,7 +18,6 @@ const config = {
       }
     },
     extend: {
-     
       colors: {
         primary: '#333',
         secondary: '#111'

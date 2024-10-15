@@ -18,6 +18,18 @@ function translateSize(size: string | null | undefined): string {
   return sizeTranslations[size.toLowerCase()] ?? 'Otro';
 }
 
+// Función auxiliar para obtener la imagen de respaldo según el tipo
+function getFallbackImage(type: string): string {
+  switch (type.toLowerCase()) {
+    case 'dog':
+      return './card-image-dog.jpg';
+    case 'cat':
+      return './card-image-cat.jpg';
+    default:
+      return './card-image.jpg';
+  }
+}
+
 async function Adoptions(): Promise<JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
   const animals = data.rows;
@@ -43,9 +55,25 @@ async function Adoptions(): Promise<JSX.Element> {
           >
             <div className='relative h-64'>
               <img
-                src={JSON.parse(animal.photos)[0] ?? './card-image.jpg'}
+                src={(() => {
+                  if (
+                    typeof animal.photos === 'string' &&
+                    animal.photos.trim() !== ''
+                  ) {
+                    try {
+                      const photosArray = JSON.parse(animal.photos);
+                      return Array.isArray(photosArray) &&
+                        photosArray.length > 0
+                        ? photosArray[0]
+                        : getFallbackImage(animal.type);
+                    } catch (e) {
+                      return getFallbackImage(animal.type);
+                    }
+                  }
+                  return getFallbackImage(animal.type);
+                })()}
                 alt={animal.name}
-                className='absolute top-0 left-0 w-full h-full object-cover'
+                className='absolute top-0 left-0 w-full h-full object-contain'
               />
             </div>
             <CardContent className='p-6 flex-grow overflow-hidden'>
