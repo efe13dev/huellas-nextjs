@@ -49,9 +49,7 @@
   }
 }
 /* globals.css */
-main {
-  min-height: 100vh;
-}
+
 body {
   font-family: 'Onest Variable', sans-serif;
   font-size: 1.1rem;
@@ -63,11 +61,16 @@ h1 {
   color: blue;
 }
 
-
 @keyframes colorChange {
-  0% { color: #4a5568; }  /* gray-700 */
-  50% { color: #2b6cb0; } /* blue-700 */
-  100% { color: #4a5568; } /* gray-700 */
+  0% {
+    color: #4a5568;
+  } /* gray-700 */
+  50% {
+    color: #2b6cb0;
+  } /* blue-700 */
+  100% {
+    color: #4a5568;
+  } /* gray-700 */
 }
 
 .animate-color-change {
