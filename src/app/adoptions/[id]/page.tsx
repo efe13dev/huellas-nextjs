@@ -95,7 +95,7 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
             })()}
           </div>
           <div className='bg-white rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col'>
-            <h1 className='text-4xl font-bold mb-6 text-center text-gray-800'>
+            <h1 className='text-5xl font-bold mb-6 text-center text-gray-800'>
               {adoption.name}
             </h1>
             <div className='space-y-4'>
@@ -134,9 +134,16 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
                 }
               />
             </div>
-            <p className='text-lg my-6 text-gray-700 leading-relaxed'>
-              {adoption.description}
-            </p>
+            <div className='my-6 text-gray-700 leading-relaxed'>
+              {adoption.description.split('\n\n').map((paragraph, index) => (
+                <p
+                  key={index}
+                  className='text-lg mb-4'
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
             <div className='mt-auto'>
               <button className='w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold text-lg shadow-md'>
                 Adoptar ahora

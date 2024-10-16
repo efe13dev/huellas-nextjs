@@ -1,5 +1,8 @@
 ## TODO
 
+- [ ] implementar la funcionalidad del boton adoptar, tiene que llevar al formulario de adopcion
+- [x] añadido el boton de volver para la vista del detalle de adopciones
+- [x] añadidas imagenes por defecto para animales sin fotos
 - [x] crear la vista del detalle de la mascota
 - [x] conectar a cloudinary para las imagenes
 - [x] arreglar el responsive y la imagen del tamaño

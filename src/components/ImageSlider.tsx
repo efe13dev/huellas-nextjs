@@ -14,17 +14,15 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, fallbackImage }) => {
   const [direction, setDirection] = useState(0);
 
   const goToPrevious = (): void => {
+    const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
     setDirection(-1);
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex(newIndex);
   };
 
   const goToNext = (): void => {
+    const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     setDirection(1);
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex(newIndex);
   };
 
   const variants = {
