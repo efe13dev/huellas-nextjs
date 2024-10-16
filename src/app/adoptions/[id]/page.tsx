@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import ImageSlider from '@/components/ImageSlider';
 import { getOneAdoption } from '@/db/clientTurso';
 import { type TursoDataResponse } from '@/types';
@@ -10,7 +11,8 @@ import {
   FaBirthdayCake,
   FaVenus,
   FaMars,
-  FaPaw
+  FaPaw,
+  FaArrowLeft
 } from 'react-icons/fa';
 
 interface AdoptionDetailProps {
@@ -58,6 +60,15 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
         className='w-full mx-auto px-4 sm:px-6 lg:px-8'
         style={{ maxWidth: '100rem' }}
       >
+        <Link
+          href='/adoptions'
+          className='inline-block mb-4'
+        >
+          <button className='flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300'>
+            <FaArrowLeft className='mr-2' />
+            <span>Volver a la lista</span>
+          </button>
+        </Link>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[650px]'>
           <div className='bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center'>
             {(() => {
