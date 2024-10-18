@@ -52,8 +52,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-      from: `"Formulario de Contacto" <${email}>`,
-      to: 'microfunky@gmail.com', // Tu dirección de correo
+      from: `"Formulario de Contacto" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER, // Tu dirección de correo
       replyTo: email, // La dirección del remitente para respuestas
       subject: `Nuevo mensaje de contacto: ${asunto}`,
       text: `Nombre: ${nombre}\nEmail: ${email}\nAsunto: ${asunto}\n\nMensaje:\n${mensaje}`,
