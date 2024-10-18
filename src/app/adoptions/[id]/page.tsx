@@ -145,9 +145,14 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
               ))}
             </div>
             <div className='mt-auto'>
-              <button className='w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold text-lg shadow-md'>
-                Adoptar ahora
-              </button>
+              <Link
+                href={`/contact`}
+                className='block w-full'
+              >
+                <button className='w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold text-lg shadow-md'>
+                  Adoptar ahora
+                </button>
+              </Link>
             </div>
           </div>
         </div>
