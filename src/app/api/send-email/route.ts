@@ -47,7 +47,6 @@ export async function POST(request: Request): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { nombre, email, asunto, mensaje } = body;
-    console.log(email);
 
     const transporter = await createTransporter();
 

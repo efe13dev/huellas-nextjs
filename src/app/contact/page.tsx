@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -10,8 +10,23 @@ import {
   SelectContent,
   SelectItem
 } from '@/components/ui/select';
+import { useSearchParams } from 'next/navigation';
 
 function Contact(): JSX.Element {
+  const searchParams = useSearchParams();
+  const [adoption, setAdoption] = useState<string | null>(null);
+
+  useEffect(() => {
+    const adoptionParam = searchParams.get('adoption');
+    setAdoption(adoptionParam);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      asunto: 'adopcion',
+      mensaje: `Estoy interesado en adoptar a ${adoption}. `
+    }));
+  }, [searchParams, adoption]);
+
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -57,7 +72,9 @@ function Contact(): JSX.Element {
     <div className='bg-gradient-to-b from-gray-50 to-white py-16'>
       <div className='container mx-auto px-4'>
         <h2 className='text-center text-3xl font-bold mb-12 text-gray-800'>
-          Contacta con nosotros
+          {adoption !== null && adoption.trim() !== ''
+            ? `Contacto para adoptar a ${adoption}`
+            : 'Contacta con nosotros'}
         </h2>
         <form
           onSubmit={handleSubmit}
@@ -92,6 +109,8 @@ function Contact(): JSX.Element {
               type='email'
               placeholder='tu@email.com'
               required
+              value={formData.email}
+              onChange={handleChange}
               className='w-full'
             />
           </div>
