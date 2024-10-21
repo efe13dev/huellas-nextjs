@@ -16,7 +16,7 @@ function Header(): JSX.Element {
                 height={60}
                 className='rounded-full border-2 border-gray-200 shadow-sm'
               />
-              <h1 className='text-3xl lg:text-5xl font-bold font-sans tracking-wide text-primary animate-color-change'>
+              <h1 className='text-3xl lg:text-5xl font-bold font-sans tracking-wide animate-color-change'>
                 Protectora Fido
               </h1>
             </div>

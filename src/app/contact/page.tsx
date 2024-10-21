@@ -11,10 +11,19 @@ import {
   SelectItem
 } from '@/components/ui/select';
 import { useSearchParams } from 'next/navigation';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '@/components/ui/dialog';
 
 function Contact(): JSX.Element {
   const searchParams = useSearchParams();
   const [adoption, setAdoption] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const adoptionParam = searchParams.get('adoption');
@@ -33,6 +42,7 @@ function Contact(): JSX.Element {
     asunto: '',
     mensaje: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,6 +56,7 @@ function Contact(): JSX.Element {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setIsLoading(true);
     fetch('/api/send-email', {
       method: 'POST',
       headers: {
@@ -54,18 +65,29 @@ function Contact(): JSX.Element {
       body: JSON.stringify(formData)
     })
       .then((response) => {
+        setIsLoading(false);
         if (response.ok) {
-          alert('Mensaje enviado con éxito');
+          setIsModalOpen(true);
           setFormData({ nombre: '', email: '', asunto: '', mensaje: '' });
         } else {
           alert('Error al enviar el mensaje');
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         // eslint-disable-next-line no-console
         console.error('Error:', error);
         alert('Error al enviar el mensaje');
       });
+  };
+
+  const isFormValid = (): boolean => {
+    return (
+      formData.nombre.trim() !== '' &&
+      formData.email.trim() !== '' &&
+      formData.asunto !== '' &&
+      formData.mensaje.trim() !== ''
+    );
   };
 
   return (
@@ -153,10 +175,34 @@ function Contact(): JSX.Element {
           <Button
             type='submit'
             className='w-1/2 mx-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out'
+            disabled={!isFormValid() || isLoading}
           >
-            Enviar mensaje
+            {isLoading ? 'Enviando...' : 'Enviar mensaje'}
           </Button>
         </form>
+        <Dialog
+          open={isModalOpen}
+          onOpenChange={setIsModalOpen}
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Mensaje enviado con éxito</DialogTitle>
+              <DialogDescription>
+                Gracias por contactarnos. Pronto nos pondremos en contacto
+                contigo.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                onClick={() => {
+                  setIsModalOpen(false);
+                }}
+              >
+                Cerrar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

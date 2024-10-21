@@ -54,10 +54,10 @@ export async function POST(request: Request): Promise<NextResponse> {
       from: `"Formulario de Contacto" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER, // Tu dirección de correo
       replyTo: email, // La dirección del remitente para respuestas
-      subject: `Nuevo mensaje de contacto: ${asunto}`,
+      subject: `Web: ${nombre} - Asunto:${asunto}`,
       text: `Nombre: ${nombre}\nEmail: ${email}\nAsunto: ${asunto}\n\nMensaje:\n${mensaje}`,
       html: `
-        <h2>Mensaje de Fido</h2>
+        <h2>Mensaje de Web Fido</h2>
         <p><strong>Nombre:</strong> ${nombre}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Asunto:</strong> ${asunto}</p>
