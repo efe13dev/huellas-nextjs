@@ -48,10 +48,10 @@ async function Adoptions(): Promise<JSX.Element> {
         </span>
       </h2>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-        {animals.map((animal) => (
+        {animals.map((animal, index) => (
           <Card
             key={animal.id}
-            className='overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-[500px]'
+            className={`overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-[500px] animate-slide-in delay-${index % 6}`}
           >
             <div className='relative h-64'>
               <img

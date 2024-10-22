@@ -76,3 +76,83 @@ h1 {
 .animate-color-change {
   animation: colorChange 6s infinite;
 }
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  opacity: 0;
+  animation: slideInFromBottom 0.5s ease-out forwards;
+}
+
+/* Clases de retraso para la animación */
+.delay-0 {
+  animation-delay: 0ms;
+}
+.delay-1 {
+  animation-delay: 100ms;
+}
+.delay-2 {
+  animation-delay: 200ms;
+}
+.delay-3 {
+  animation-delay: 300ms;
+}
+.delay-4 {
+  animation-delay: 400ms;
+}
+.delay-5 {
+  animation-delay: 500ms;
+}
+/* ... continúa hasta el número máximo de elementos que esperas tener */
+
+@keyframes slideInFromSides {
+  0% {
+    transform: translateX(var(--slide-distance));
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-from-left {
+  --slide-distance: -50px;
+  opacity: 0;
+  animation: slideInFromSides 0.4s ease-out forwards;
+}
+
+.animate-slide-from-right {
+  --slide-distance: 50px;
+  opacity: 0;
+  animation: slideInFromSides 0.4s ease-out forwards;
+}
+
+/* Clases de retraso para la animación */
+.delay-0 {
+  animation-delay: 0ms;
+}
+.delay-1 {
+  animation-delay: 100ms;
+}
+.delay-2 {
+  animation-delay: 200ms;
+}
+.delay-3 {
+  animation-delay: 300ms;
+}
+.delay-4 {
+  animation-delay: 400ms;
+}
+.delay-5 {
+  animation-delay: 500ms;
+}

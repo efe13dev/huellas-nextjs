@@ -1,6 +1,8 @@
 ## TODO
 
-- [ ] revisar porque no consigo recuperar el email del formulario de adopcion
+- [ ] revisar porque no se ven las imagenes en el detalle de adopciones (vista movil)
+- [x] añadir animaciones a la vista de adopciones
+- [x] revisar porque no consigo recuperar el email del formulario de adopcion
 - [x] implementar la funcionalidad del boton adoptar, tiene que llevar al formulario de adopcion
 - [x] añadido el boton de volver para la vista del detalle de adopciones
 - [x] añadidas imagenes por defecto para animales sin fotos

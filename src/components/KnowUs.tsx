@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 function KnowUs(): JSX.Element {
   return (
-    <section className='flex-grow flex flex-col md:flex-row items-center justify-center px-4 py-12 rounded-xl overflow-hidden shadow-2xl mb-20'>
-      <div className='md:w-1/2 space-y-6 md:pr-12'>
+    <section className='flex-grow flex flex-col md:flex-row items-center justify-center px-4 py-12 rounded-xl overflow-hidden shadow-2xl mb-20 animate-slide-in'>
+      <div className='md:w-1/2 space-y-6 md:pr-12 animate-slide-from-left'>
         <h2 className='text-3xl font-bold text-gray-800'>
           Conócenos:{' '}
           {/* <span className="text-blue-600">Protectora Fido</span> */}
@@ -21,7 +21,7 @@ function KnowUs(): JSX.Element {
           a animales abandonados y maltratados. Hemos rescatado y dado en
           adopción a{' '}
           <span className='font-semibold text-blue-600'>
-            más de 5,000 perros y gatos
+            una gran cantidad de perros y gatos
           </span>
           , brindándoles una{' '}
           <span className='font-semibold text-blue-600'>
@@ -56,7 +56,7 @@ function KnowUs(): JSX.Element {
           </Link>
         </div>
       </div>
-      <div className='md:w-1/2 relative mt-8 md:mt-0'>
+      <div className='md:w-1/2 relative mt-8 md:mt-0 animate-slide-from-right'>
         <Image
           src='/pexels-bruno.jpg'
           alt='Golden Retriever'

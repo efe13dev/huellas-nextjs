@@ -72,13 +72,13 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, fallbackImage }) => {
         <>
           <button
             onClick={goToPrevious}
-            className='absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10'
+            className='absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 transition-all duration-300 hover:bg-opacity-70'
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={goToNext}
-            className='absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10'
+            className='absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 transition-all duration-300 hover:bg-opacity-70'
           >
             <ChevronRight size={24} />
           </button>

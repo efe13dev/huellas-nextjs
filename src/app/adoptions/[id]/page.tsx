@@ -70,7 +70,7 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
           </button>
         </Link>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[650px]'>
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center'>
+          <div className='bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center animate-slide-from-left'>
             {(() => {
               const parsedPhotos =
                 typeof adoption.photos === 'string' && adoption.photos !== ''
@@ -94,9 +94,11 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
               );
             })()}
           </div>
-          <div className='bg-white rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col'>
-            <h1 className='text-5xl font-bold mb-6 text-center text-gray-800'>
+          <div className='bg-white rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col animate-slide-from-right'>
+            <h1 className='text-5xl font-bold mb-6 text-center text-gray-800 flex items-center justify-center'>
+              <span className='text-gray-500 mx-2'>·</span>
               {adoption.name}
+              <span className='text-gray-500 mx-2'>·</span>
             </h1>
             <div className='space-y-4'>
               <InfoItem

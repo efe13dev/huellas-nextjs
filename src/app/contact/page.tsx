@@ -100,7 +100,7 @@ function Contact(): JSX.Element {
         </h2>
         <form
           onSubmit={handleSubmit}
-          className='mx-auto max-w-xl flex flex-col gap-6 bg-white p-8 rounded-lg shadow-lg'
+          className='mx-auto max-w-xl flex flex-col gap-6 bg-white p-8 rounded-lg shadow-lg animate-slide-in'
         >
           <div className='space-y-2'>
             <label
