@@ -97,7 +97,7 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
           <div className='bg-white rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col animate-slide-from-right'>
             <h1 className='text-5xl font-bold mb-6 text-center text-gray-800 flex items-center justify-center'>
               <span className='text-gray-500 mx-2'>·</span>
-              {adoption.name}
+              <span className='animate-fade-in'>{adoption.name}</span>
               <span className='text-gray-500 mx-2'>·</span>
             </h1>
             <div className='space-y-4'>

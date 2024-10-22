@@ -36,7 +36,7 @@ async function Adoptions(): Promise<JSX.Element> {
 
   return (
     <main className='container mx-auto px-4 py-8'>
-      <h2 className='text-center text-4xl font-bold mb-12'>
+      <h2 className='text-center text-4xl font-bold mb-12 animate-slide-in'>
         <span className='bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text'>
           Encuentra
         </span>{' '}
