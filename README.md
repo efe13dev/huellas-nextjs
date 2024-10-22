@@ -1,6 +1,8 @@
 ## TODO
 
-- [ ] revisar porque no se ven las imagenes en el detalle de adopciones (vista movil)
+- [ ] cambiar el titulo del formulario cuando se va desde adopta ahora a contacto
+- [ ] cambiar favicon
+- [x] revisar porque no se ven las imagenes en el detalle de adopciones (vista movil)
 - [x] añadir animaciones a la vista de adopciones
 - [x] revisar porque no consigo recuperar el email del formulario de adopcion
 - [x] implementar la funcionalidad del boton adoptar, tiene que llevar al formulario de adopcion

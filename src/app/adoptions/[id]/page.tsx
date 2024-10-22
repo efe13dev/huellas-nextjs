@@ -69,8 +69,8 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
             <span>Volver a la lista</span>
           </button>
         </Link>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[650px]'>
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center animate-slide-from-left'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          <div className='bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center animate-slide-from-left h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px]'>
             {(() => {
               const parsedPhotos =
                 typeof adoption.photos === 'string' && adoption.photos !== ''
@@ -88,7 +88,7 @@ const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
                   <img
                     src={getFallbackImage(adoption.type)}
                     alt={`Imagen de respaldo para ${traducirTipo(adoption.type)}`}
-                    className='w-full h-full object-contain'
+                    className='w-full h-full object-cover'
                   />
                 </div>
               );
