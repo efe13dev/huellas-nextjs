@@ -1,8 +1,8 @@
 ## TODO
 
-- [ ] tocar colores del header para que se parezcan mas a los del logo
-- [ ] enlazar el ser voluntario
-- [ ] añadir metadata
+- [x] tocar colores del header para que se parezcan mas a los del logo
+- [x] enlazar el ser voluntario
+- [x] añadir metadata
 - [x] rellenar con datos para mostrar
 - [x] cambiar el titulo del formulario cuando se va desde adopta ahora a contacto
 - [x] cambiar favicon

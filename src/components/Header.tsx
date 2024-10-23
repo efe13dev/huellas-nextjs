@@ -14,8 +14,12 @@ function Header(): JSX.Element {
                 alt='FIDO logo'
                 width={60}
                 height={60}
+                className='drop-shadow-md'
               />
-              <h1 className='text-3xl lg:text-5xl font-bold font-sans tracking-wide animate-color-change'>
+              <h1
+                className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-sans tracking-wide animate-color-change'
+                style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
+              >
                 Protectora Fido
               </h1>
             </div>

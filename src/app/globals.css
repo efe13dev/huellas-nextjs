@@ -63,18 +63,18 @@ h1 {
 
 @keyframes colorChange {
   0% {
-    color: #2b6cb0;
+    color: #d1b0a6;
   }
   50% {
-    color: #22477b;
+    color: #b4897b;
   }
   100% {
-    color: #2b6cb0;
+    color: #d2b0a7;
   }
 }
 
 .animate-color-change {
-  animation: colorChange 6s infinite;
+  animation: colorChange 8s infinite;
 }
 
 @keyframes slideInFromBottom {
