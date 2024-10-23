@@ -33,8 +33,9 @@ const traducirTipo = (type: string): string => {
   }
 };
 
-const AdoptionDetail: React.FC<AdoptionDetailProps> = async (props) => {
-  const params = await props.params;
+const AdoptionDetailPage = async ({
+  params
+}: AdoptionDetailProps): Promise<React.JSX.Element> => {
   const data: TursoDataResponse = await getOneAdoption(params.id);
   const adoption = data.rows[0];
 
@@ -217,4 +218,4 @@ const InfoItem: React.FC<{
   </p>
 );
 
-export default AdoptionDetail;
+export default AdoptionDetailPage;
