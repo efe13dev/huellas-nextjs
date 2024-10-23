@@ -66,7 +66,7 @@ function KnowUs(): JSX.Element {
         />
         <div className='absolute bottom-4 left-4 bg-white bg-opacity-80 px-4 py-2 rounded-full'>
           <p className='text-sm font-semibold text-gray-800'>
-            Más de 5,000 animales rescatados
+            Un hogar para cada huella que necesita amor
           </p>
         </div>
       </div>

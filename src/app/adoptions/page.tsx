@@ -47,60 +47,66 @@ async function Adoptions(): Promise<JSX.Element> {
           compañero
         </span>
       </h2>
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-        {animals.map((animal, index) => (
-          <Card
-            key={animal.id}
-            className={`overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-[500px] animate-slide-in delay-${index % 6}`}
-          >
-            <div className='relative h-64'>
-              <img
-                src={(() => {
-                  if (
-                    typeof animal.photos === 'string' &&
-                    animal.photos.trim() !== ''
-                  ) {
-                    try {
-                      const photosArray = JSON.parse(animal.photos);
-                      return Array.isArray(photosArray) &&
-                        photosArray.length > 0
-                        ? photosArray[0]
-                        : getFallbackImage(animal.type);
-                    } catch (e) {
-                      return getFallbackImage(animal.type);
+      {animals.length > 0 ? (
+        <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
+          {animals.map((animal, index) => (
+            <Card
+              key={animal.id}
+              className={`overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-[500px] animate-slide-in delay-${index % 6}`}
+            >
+              <div className='relative h-64'>
+                <img
+                  src={(() => {
+                    if (
+                      typeof animal.photos === 'string' &&
+                      animal.photos.trim() !== ''
+                    ) {
+                      try {
+                        const photosArray = JSON.parse(animal.photos);
+                        return Array.isArray(photosArray) &&
+                          photosArray.length > 0
+                          ? photosArray[0]
+                          : getFallbackImage(animal.type);
+                      } catch (e) {
+                        return getFallbackImage(animal.type);
+                      }
                     }
-                  }
-                  return getFallbackImage(animal.type);
-                })()}
-                alt={animal.name}
-                className='absolute top-0 left-0 w-full h-full object-contain'
-              />
-            </div>
-            <CardContent className='p-6 flex-grow overflow-hidden'>
-              <CardTitle className='text-2xl mb-2'>{animal.name}</CardTitle>
-              <p className='text-muted-foreground mb-4 line-clamp-2'>
-                {animal.description}
-              </p>
-              <Badge
-                variant='outline'
-                className='mb-4'
-              >
-                Tamaño: {translateSize(animal.size)}
-              </Badge>
-            </CardContent>
-            <CardFooter className='p-6'>
-              <Link
-                href={`/adoptions/${animal.id}`}
-                className='w-full'
-              >
-                <Button className='w-full transition duration-300 ease-in-out hover:bg-white hover:text-black'>
-                  Ver más
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+                    return getFallbackImage(animal.type);
+                  })()}
+                  alt={animal.name}
+                  className='absolute top-0 left-0 w-full h-full object-contain'
+                />
+              </div>
+              <CardContent className='p-6 flex-grow overflow-hidden'>
+                <CardTitle className='text-2xl mb-2'>{animal.name}</CardTitle>
+                <p className='text-muted-foreground mb-4 line-clamp-2'>
+                  {animal.description}
+                </p>
+                <Badge
+                  variant='outline'
+                  className='mb-4'
+                >
+                  Tamaño: {translateSize(animal.size)}
+                </Badge>
+              </CardContent>
+              <CardFooter className='p-6'>
+                <Link
+                  href={`/adoptions/${animal.id}`}
+                  className='w-full'
+                >
+                  <Button className='w-full transition duration-300 ease-in-out hover:bg-white hover:text-black'>
+                    Ver más
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <p className='text-center text-xl text-gray-600'>
+          No hay animales para mostrar en este momento.
+        </p>
+      )}
     </main>
   );
 }

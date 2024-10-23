@@ -1,7 +1,9 @@
 ## TODO
 
-- [ ] cambiar el titulo del formulario cuando se va desde adopta ahora a contacto
-- [ ] cambiar favicon
+- [ ] añadir metadata
+- [ ] rellenar con datos para mostrar
+- [x] cambiar el titulo del formulario cuando se va desde adopta ahora a contacto
+- [x] cambiar favicon
 - [x] revisar porque no se ven las imagenes en el detalle de adopciones (vista movil)
 - [x] añadir animaciones a la vista de adopciones
 - [x] revisar porque no consigo recuperar el email del formulario de adopcion
