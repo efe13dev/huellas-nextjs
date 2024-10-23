@@ -15,12 +15,6 @@ import {
   FaArrowLeft
 } from 'react-icons/fa';
 
-interface AdoptionDetailProps {
-  params: {
-    id: string;
-  };
-}
-
 // Función auxiliar para traducir el tipo de mascota
 const traducirTipo = (type: string): string => {
   switch (type.toLowerCase()) {
@@ -33,7 +27,10 @@ const traducirTipo = (type: string): string => {
   }
 };
 
-const AdoptionDetailPage: React.FC<AdoptionDetailProps> = async (props) => {
+// Cambiamos la definición del componente para que coincida con el tipo esperado por Next.js
+const AdoptionDetailPage = async (props: {
+  params: { id: string };
+}): Promise<React.JSX.Element> => {
   const params = await props.params;
   const data: TursoDataResponse = await getOneAdoption(params.id);
   const adoption = data.rows[0];
