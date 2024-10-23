@@ -39,7 +39,11 @@ const AdoptionDetailPage = async ({
 
   // Agregar una comprobación para asegurarse de que adoption existe
   if (adoption === null || adoption === undefined) {
-    return <div>No se encontró la adopción</div>;
+    return (
+      <div className='text-center text-2xl font-bold'>
+        No se encontró la adopción
+      </div>
+    );
   }
 
   // Determinar la imagen de respaldo según el tipo de mascota

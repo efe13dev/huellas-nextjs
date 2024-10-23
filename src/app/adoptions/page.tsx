@@ -30,6 +30,8 @@ function getFallbackImage(type: string): string {
   }
 }
 
+export const dynamic = 'force-dynamic';
+
 async function Adoptions(): Promise<React.JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
   const animals = data.rows;
