@@ -20,7 +20,7 @@ import {
   DialogFooter
 } from '@/components/ui/dialog';
 
-function Contact(): JSX.Element {
+function Contact(): React.JSX.Element {
   const searchParams = useSearchParams();
   const [adoption, setAdoption] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +32,7 @@ function Contact(): JSX.Element {
     setFormData((prevData) => ({
       ...prevData,
       asunto: 'adopcion',
-      mensaje: `Estoy interesado en adoptar a ${adoption}. `
+      mensaje: `Estoy interesad@ en adoptar a ${adoption}. `
     }));
   }, [searchParams, adoption]);
 
@@ -111,12 +111,14 @@ function Contact(): JSX.Element {
             </label>
             <Input
               id='nombre'
+              name='nombre'
               type='text'
               placeholder='Tu nombre'
               required
               className='w-full'
               value={formData.nombre}
               onChange={handleChange}
+              autoComplete='name'
             />
           </div>
           <div className='space-y-2'>
@@ -128,17 +130,19 @@ function Contact(): JSX.Element {
             </label>
             <Input
               id='email'
+              name='email'
               type='email'
               placeholder='tu@email.com'
               required
               value={formData.email}
               onChange={handleChange}
               className='w-full'
+              autoComplete='email'
             />
           </div>
           <div className='space-y-2'>
             <label
-              htmlFor='asunto'
+              htmlFor='asunto-select'
               className='text-sm font-medium text-gray-700'
             >
               Asunto
@@ -147,12 +151,15 @@ function Contact(): JSX.Element {
               onValueChange={handleSelectChange}
               value={formData.asunto}
             >
-              <SelectTrigger>
+              <SelectTrigger
+                id='asunto-select'
+                name='asunto'
+              >
                 <SelectValue placeholder='Selecciona un asunto' />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value='adopcion'>Adopción</SelectItem>
-                <SelectItem value='ayuda'>Ayuda</SelectItem>
+                <SelectItem value='ayuda'>Ayudar</SelectItem>
                 <SelectItem value='otros'>Otro</SelectItem>
               </SelectContent>
             </Select>
@@ -166,10 +173,12 @@ function Contact(): JSX.Element {
             </label>
             <Textarea
               id='mensaje'
+              name='mensaje'
               placeholder='Escribe tu mensaje aquí...'
               className='w-full h-32'
               value={formData.mensaje}
               onChange={handleChange}
+              autoComplete='off'
             />
           </div>
           <Button

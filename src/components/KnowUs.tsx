@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -46,7 +46,7 @@ function KnowUs(): JSX.Element {
             Adopta ahora
           </Link>
           <Link
-            href='/voluntario'
+            href='/contact'
             className='inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-blue-600 border border-blue-600 hover:bg-blue-50 h-10 px-4 py-2'
           >
             Ser voluntario

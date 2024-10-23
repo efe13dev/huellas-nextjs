@@ -33,7 +33,8 @@ const traducirTipo = (type: string): string => {
   }
 };
 
-const AdoptionDetail: React.FC<AdoptionDetailProps> = async ({ params }) => {
+const AdoptionDetail: React.FC<AdoptionDetailProps> = async (props) => {
+  const params = await props.params;
   const data: TursoDataResponse = await getOneAdoption(params.id);
   const adoption = data.rows[0];
 

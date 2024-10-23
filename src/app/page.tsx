@@ -1,3 +1,4 @@
+import { type JSX } from 'react';
 import KnowUs from '@/components/KnowUs';
 import HelpUs from '@/components/HelpUs';
 export default function Component(): JSX.Element {

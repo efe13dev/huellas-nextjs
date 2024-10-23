@@ -2,7 +2,11 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react'; // Asume que estás usando lucide-react para iconos
-import { motion, AnimatePresence } from 'framer-motion'; // Importamos motion y AnimatePresence
+import { motion, AnimatePresence, type HTMLMotionProps } from 'framer-motion'; // Importamos motion y AnimatePresence
+
+interface CustomDivProps extends HTMLMotionProps<'div'> {
+  className?: string;
+}
 
 interface ImageSliderProps {
   images: string[];
@@ -42,13 +46,15 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, fallbackImage }) => {
     })
   };
 
+  const MotionDiv = motion.div as React.FC<CustomDivProps>;
+
   return (
     <div className='h-full w-full relative overflow-hidden'>
       <AnimatePresence
         initial={false}
         custom={direction}
       >
-        <motion.div
+        <MotionDiv
           key={currentIndex}
           custom={direction}
           variants={variants}
@@ -66,7 +72,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, fallbackImage }) => {
             alt={`Slide ${currentIndex + 1}`}
             className='max-h-full max-w-full object-contain'
           />
-        </motion.div>
+        </MotionDiv>
       </AnimatePresence>
       {images.length > 1 && (
         <>

@@ -30,7 +30,7 @@ function getFallbackImage(type: string): string {
   }
 }
 
-async function Adoptions(): Promise<JSX.Element> {
+async function Adoptions(): Promise<React.JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
   const animals = data.rows;
 

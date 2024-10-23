@@ -13,7 +13,7 @@ export default function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
-}>): JSX.Element {
+}>): React.JSX.Element {
   return (
     <html lang='es'>
       <body className='flex flex-col min-h-screen '>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -45,6 +45,8 @@ function HelpUs(): JSX.Element {
         <Link
           href='https://www.teaming.net/protectorafido'
           className='bg-green-500 hover:bg-green-600 text-white self-start px-4 py-2 rounded-md font-semibold transition-colors duration-200 delay-4'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Donar ahora
         </Link>
