@@ -28,11 +28,13 @@ const traducirTipo = (type: string): string => {
 };
 
 // Cambiamos la definición del componente para que coincida con el tipo esperado por Next.js
-const AdoptionDetailPage = async (props: {
-  params: { id: string };
+const AdoptionDetailPage = async ({
+  params
+}: {
+  params: Promise<{ id: string }>;
 }): Promise<React.JSX.Element> => {
-  const params = await props.params;
-  const data: TursoDataResponse = await getOneAdoption(params.id);
+  const { id } = await params;
+  const data: TursoDataResponse = await getOneAdoption(id);
   const adoption = data.rows[0];
 
   // Agregar una comprobación para asegurarse de que adoption existe
