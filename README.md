@@ -1,5 +1,7 @@
 ## TODO
 
+- [ ] cuando pulse adoptar ahora en la vista movil centrar foumalrio para que se vea el titulo
+- [ ] en la vista de adopciones poner un loading mientras se carga la data
 - [x] tocar colores del header para que se parezcan mas a los del logo
 - [x] enlazar el ser voluntario
 - [x] añadir metadata
