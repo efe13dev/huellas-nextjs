@@ -1,7 +1,9 @@
 ## TODO
 
+- [ ] tocar colores del header para que se parezcan mas a los del logo
+- [ ] enlazar el ser voluntario
 - [ ] añadir metadata
-- [ ] rellenar con datos para mostrar
+- [x] rellenar con datos para mostrar
 - [x] cambiar el titulo del formulario cuando se va desde adopta ahora a contacto
 - [x] cambiar favicon
 - [x] revisar porque no se ven las imagenes en el detalle de adopciones (vista movil)
@@ -13,7 +15,7 @@
 - [x] crear la vista del detalle de la mascota
 - [x] conectar a cloudinary para las imagenes
 - [x] arreglar el responsive y la imagen del tamaño
-- [x]crear el loading y el error page
+- [x] crear el loading y el error page
 - [x] arreglar el .env
 - [x] tipar la respuesta de la petición
 

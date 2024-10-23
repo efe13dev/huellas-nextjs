@@ -10,11 +10,10 @@ function Header(): JSX.Element {
           <Link href='/'>
             <div className='flex items-center gap-4'>
               <Image
-                src='/fido-logo-grande.jpeg'
+                src='/fido-logo-cuadrado.png'
                 alt='FIDO logo'
                 width={60}
                 height={60}
-                className='rounded-full border-2 border-gray-200 shadow-sm'
               />
               <h1 className='text-3xl lg:text-5xl font-bold font-sans tracking-wide animate-color-change'>
                 Protectora Fido

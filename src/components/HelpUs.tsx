@@ -7,7 +7,7 @@ function HelpUs(): JSX.Element {
     <section className='flex-grow flex flex-col md:flex-row bg-gray-800 rounded-xl overflow-hidden shadow-2xl animate-slide-in'>
       <div className='md:w-1/2 animate-slide-from-left'>
         <Image
-          src='/pexels-bruno.jpg'
+          src='/help-us-image-optimized.jpg'
           alt='Golden Retriever looking sad'
           width={600}
           height={400}

@@ -6,10 +6,7 @@ function KnowUs(): JSX.Element {
   return (
     <section className='flex-grow flex flex-col md:flex-row items-center justify-center px-4 py-12 rounded-xl overflow-hidden shadow-2xl mb-20 animate-slide-in'>
       <div className='md:w-1/2 space-y-6 md:pr-12 animate-slide-from-left'>
-        <h2 className='text-3xl font-bold text-gray-800'>
-          Conócenos:{' '}
-          {/* <span className="text-blue-600">Protectora Fido</span> */}
-        </h2>
+        <h2 className='text-3xl font-bold text-gray-800'>Conócenos: </h2>
         <p className='text-sm text-gray-500'>Desde 2022</p>
         <p className='text-gray-600 leading-relaxed text-pretty'>
           En Fido, nuestra{' '}
@@ -56,18 +53,20 @@ function KnowUs(): JSX.Element {
           </Link>
         </div>
       </div>
-      <div className='md:w-1/2 relative mt-8 md:mt-0 animate-slide-from-right'>
-        <Image
-          src='/pexels-bruno.jpg'
-          alt='Golden Retriever'
-          width={600}
-          height={400}
-          className='rounded-lg shadow-xl h-full w-full object-cover'
-        />
-        <div className='absolute bottom-4 left-4 bg-white bg-opacity-80 px-4 py-2 rounded-full'>
-          <p className='text-sm font-semibold text-gray-800'>
-            Un hogar para cada huella que necesita amor
-          </p>
+      <div className='md:w-1/2 mt-8 md:mt-0 animate-slide-from-right'>
+        <div className='relative'>
+          <Image
+            src='/know-us-image-optimized.jpg'
+            alt='Golden Retriever'
+            width={600}
+            height={400}
+            className='rounded-lg shadow-xl h-full w-full object-cover'
+          />
+          <div className='absolute -bottom-10 left-0 bg-white px-4 py-2 rounded-lg shadow-md '>
+            <p className='text-sm font-semibold text-gray-800'>
+              Un hogar para cada huella que necesita amor
+            </p>
+          </div>
         </div>
       </div>
     </section>
