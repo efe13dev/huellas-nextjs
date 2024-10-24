@@ -56,8 +56,8 @@ function KnowUs(): JSX.Element {
       <div className='md:w-1/2 mt-8 md:mt-0 animate-slide-from-right'>
         <div className='relative'>
           <Image
-            src='/know-us-image-optimized.jpg'
-            alt='Golden Retriever'
+            src='/know-us-image-optimized.webp'
+            alt='A puppy dog looking for a home'
             width={600}
             height={400}
             className='rounded-lg shadow-xl h-full w-full object-cover'
