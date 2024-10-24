@@ -62,8 +62,8 @@ function KnowUs(): JSX.Element {
             height={400}
             className='rounded-lg shadow-xl h-full w-full object-cover'
           />
-          <div className='absolute -bottom-10 left-0 bg-white px-4 py-2 rounded-lg shadow-md '>
-            <p className='text-sm font-semibold text-gray-800'>
+          <div className='absolute -bottom-10 left-0 bg-white px-4 py-2 rounded-lg shadow-md md:px-4 md:py-2'>
+            <p className='text-xs font-semibold text-gray-800 md:text-sm'>
               Un hogar para cada huella que necesita amor
             </p>
           </div>
