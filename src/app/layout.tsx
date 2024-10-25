@@ -10,12 +10,14 @@ export const metadata: Metadata = {
     'Protectora de animales Fido en La Hoya, Murcia. Adopción, voluntariado y cuidado de mascotas abandonadas.',
   keywords:
     'protectora de animales, adopción, La Hoya, Murcia, perros, gatos, mascotas, refugio',
-  authors: [{ name: 'Protectora Fido', url: 'https://www.protectorafido.es' }],
+  authors: [
+    { name: 'Protectora Fido', url: 'https://fido-protectora.vercel.app/' }
+  ],
   openGraph: {
     title: 'Protectora Fido - Refugio de Animales en La Hoya, Murcia',
     description:
       'Ayuda a animales necesitados. Adopta, apadrina o hazte voluntario en nuestra protectora en La Hoya, Murcia.',
-    url: 'https://www.protectorafido.es', // Asegúrate de cambiar esto a tu URL real
+    url: 'https://fido-protectora.vercel.app/', // Asegúrate de cambiar esto a tu URL real
     siteName: 'Protectora Fido',
     locale: 'es_ES',
     type: 'website'

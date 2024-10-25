@@ -5,58 +5,8 @@ import { type TursoDataResponse } from '@/types';
 import { getAdoptions } from '@/db/clientTurso';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-
-function translateSize(size: string | null | undefined): string {
-  if (size == null || size.trim() === '') return 'Desconocido';
-
-  const sizeTranslations: Record<string, string> = {
-    small: 'Pequeño',
-    medium: 'Mediano',
-    big: 'Grande'
-  };
-
-  return sizeTranslations[size.toLowerCase()] ?? 'Otro';
-}
-
-// Función auxiliar para obtener la imagen de respaldo según el tipo
-function getFallbackImage(type: string): string {
-  switch (type.toLowerCase()) {
-    case 'dog':
-      return './card-image-dog.jpg';
-    case 'cat':
-      return './card-image-cat.jpg';
-    default:
-      return './card-image.jpg';
-  }
-}
-
-function AnimalCardSkeleton(): React.JSX.Element {
-  return (
-    <Card className='overflow-hidden flex flex-col h-[500px]'>
-      <Skeleton className='h-64 w-full' />
-      <CardContent className='p-6 flex-grow'>
-        <Skeleton className='h-8 w-3/4 mb-4' />
-        <Skeleton className='h-4 w-full mb-2' />
-        <Skeleton className='h-4 w-2/3 mb-4' />
-        <Skeleton className='h-6 w-1/3' />
-      </CardContent>
-      <CardFooter className='p-6'>
-        <Skeleton className='h-10 w-full' />
-      </CardFooter>
-    </Card>
-  );
-}
-
-function AnimalCardSkeletonGrid(): React.JSX.Element {
-  return (
-    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-      {[...Array(6)].map((_, index) => (
-        <AnimalCardSkeleton key={index} />
-      ))}
-    </div>
-  );
-}
+import { translateSize, getFallbackImage } from '@/lib/utils';
+import AnimalCardSkeletonGrid from '@/components/AnimalCardSkeletonGrid';
 
 async function AnimalsGrid(): Promise<React.JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
