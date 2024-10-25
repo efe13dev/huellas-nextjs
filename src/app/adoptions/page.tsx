@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { type TursoDataResponse } from '@/types';
 import { getAdoptions } from '@/db/clientTurso';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function translateSize(size: string | null | undefined): string {
   if (size == null || size.trim() === '') return 'Desconocido';
@@ -30,25 +31,39 @@ function getFallbackImage(type: string): string {
   }
 }
 
-export const dynamic = 'force-dynamic';
+function AnimalCardSkeleton(): React.JSX.Element {
+  return (
+    <Card className='overflow-hidden flex flex-col h-[500px]'>
+      <Skeleton className='h-64 w-full' />
+      <CardContent className='p-6 flex-grow'>
+        <Skeleton className='h-8 w-3/4 mb-4' />
+        <Skeleton className='h-4 w-full mb-2' />
+        <Skeleton className='h-4 w-2/3 mb-4' />
+        <Skeleton className='h-6 w-1/3' />
+      </CardContent>
+      <CardFooter className='p-6'>
+        <Skeleton className='h-10 w-full' />
+      </CardFooter>
+    </Card>
+  );
+}
 
-async function Adoptions(): Promise<React.JSX.Element> {
+function AnimalCardSkeletonGrid(): React.JSX.Element {
+  return (
+    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
+      {[...Array(6)].map((_, index) => (
+        <AnimalCardSkeleton key={index} />
+      ))}
+    </div>
+  );
+}
+
+async function AnimalsGrid(): Promise<React.JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
   const animals = data.rows;
 
   return (
-    <main className='container mx-auto px-4 py-8'>
-      <h2 className='text-center text-4xl font-bold mb-12 animate-slide-in'>
-        <span className='bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text'>
-          Encuentra
-        </span>{' '}
-        <span className='bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 text-transparent bg-clip-text'>
-          a tu nuevo
-        </span>{' '}
-        <span className='bg-gradient-to-r from-purple-600 to-pink-500 text-transparent bg-clip-text'>
-          compañero
-        </span>
-      </h2>
+    <>
       {animals.length > 0 ? (
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
           {animals.map((animal, index) => (
@@ -109,8 +124,27 @@ async function Adoptions(): Promise<React.JSX.Element> {
           No hay animales para mostrar en este momento.
         </p>
       )}
-    </main>
+    </>
   );
 }
 
-export default Adoptions;
+export default function Adoptions(): React.JSX.Element {
+  return (
+    <main className='container mx-auto px-4 py-8'>
+      <h2 className='text-center text-4xl font-bold mb-12 animate-slide-in'>
+        <span className='bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text'>
+          Encuentra
+        </span>{' '}
+        <span className='bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 text-transparent bg-clip-text'>
+          a tu nuevo
+        </span>{' '}
+        <span className='bg-gradient-to-r from-purple-600 to-pink-500 text-transparent bg-clip-text'>
+          compañero
+        </span>
+      </h2>
+      <Suspense fallback={<AnimalCardSkeletonGrid />}>
+        <AnimalsGrid />
+      </Suspense>
+    </main>
+  );
+}
