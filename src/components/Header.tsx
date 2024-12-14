@@ -10,8 +10,8 @@ function Header(): JSX.Element {
           <Link href='/'>
             <div className='flex items-center gap-4'>
               <Image
-                src='/fido-logo-cuadrado.png'
-                alt='FIDO logo'
+                src='/logo-huellas.png'
+                alt='Huellas logo'
                 width={60}
                 height={60}
                 className='drop-shadow-md'
@@ -20,7 +20,7 @@ function Header(): JSX.Element {
                 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-sans tracking-wide animate-color-change'
                 style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
               >
-                Protectora Fido
+                Protectora Huellas
               </h1>
             </div>
           </Link>
@@ -53,7 +53,7 @@ function Header(): JSX.Element {
               </li>
             </ul>
             <Link
-              href='https://www.teaming.net/protectorafido'
+              href='#'
               className='bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-semibold transition-colors duration-200 w-full text-center lg:w-auto'
               target='_blank'
               rel='noopener noreferrer'

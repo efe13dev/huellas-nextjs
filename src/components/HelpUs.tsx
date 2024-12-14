@@ -43,7 +43,7 @@ function HelpUs(): JSX.Element {
           vez.
         </p>
         <Link
-          href='https://www.teaming.net/protectorafido'
+          href='#'
           className='bg-green-500 hover:bg-green-600 text-white self-start px-4 py-2 rounded-md font-semibold transition-colors duration-200 delay-4'
           target='_blank'
           rel='noopener noreferrer'

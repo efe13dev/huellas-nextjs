@@ -9,7 +9,7 @@ function KnowUs(): JSX.Element {
         <h2 className='text-3xl font-bold text-gray-800'>Conócenos: </h2>
         <p className='text-sm text-gray-500'>Desde 2022</p>
         <p className='text-gray-600 leading-relaxed text-pretty'>
-          En Fido, nuestra{' '}
+          En Huellas, nuestra{' '}
           <span className='font-semibold text-blue-600'>misión</span> es
           proporcionar un{' '}
           <span className='font-semibold text-blue-600'>

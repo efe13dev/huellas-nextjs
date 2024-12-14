@@ -1,0 +1,18 @@
+module.exports = {
+  extends: ['next/core-web-vitals', 'love', 'prettier'],
+  parserOptions: {
+    project: ['./tsconfig.json']
+  },
+  rules: {
+    semi: 'off',
+    '@typescript-eslint/semi': ['error', 'always'],
+    'no-console': 'warn',
+    '@next/next/no-img-element': 'off',
+    '@typescript-eslint/await-thenable': 'off'
+  },
+  settings: {
+    next: {
+      rootDir: '.'
+    }
+  }
+};
