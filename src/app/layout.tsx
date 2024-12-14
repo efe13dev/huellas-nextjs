@@ -5,19 +5,22 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Protectora Huellas - Refugio de Animales en Murcia',
+  title: 'Protectora Huellas',
   description:
     'Protectora de animales Huellas en Murcia. Adopción, voluntariado y cuidado de mascotas abandonadas.',
   keywords:
     'protectora de animales, adopción, Murcia, perros, gatos, mascotas, refugio',
   authors: [
-    { name: 'Protectora Huellas', url: 'https://fido-protectora.vercel.app/' }
+    {
+      name: 'Protectora Huellas',
+      url: 'https://huellas-protectora.vercel.app/'
+    }
   ],
   openGraph: {
     title: 'Protectora Huellas - Refugio de Animales en  Murcia',
     description:
       'Ayuda a animales necesitados. Adopta, apadrina o hazte voluntario en nuestra protectora, en Murcia.',
-    url: 'https://fido-protectora.vercel.app/', // Asegúrate de cambiar esto a tu URL real
+    url: 'https://huellas-protectora.vercel.app/', // Asegúrate de cambiar esto a tu URL real
     siteName: 'Protectora Huellas',
     locale: 'es_ES',
     type: 'website'
