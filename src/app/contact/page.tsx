@@ -210,7 +210,7 @@ function Contact(): React.JSX.Element {
             </DialogHeader>
             <DialogFooter>
               <Button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => { setIsModalOpen(false); }}
                 className='w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-xl transition-all duration-300'
               >
                 Entendido
