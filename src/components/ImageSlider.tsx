@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence, type HTMLMotionProps } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence, type HTMLMotionProps } from "framer-motion";
 
-interface CustomDivProps extends HTMLMotionProps<'div'> {
+interface CustomDivProps extends HTMLMotionProps<"div"> {
   className?: string;
 }
 
@@ -16,12 +16,12 @@ interface ImageSliderProps {
   showIndicators?: boolean;
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({ 
-  images, 
+const ImageSlider: React.FC<ImageSliderProps> = ({
+  images,
   fallbackImage,
   autoPlay = false,
   autoPlayInterval = 4000,
-  showIndicators = true
+  showIndicators = true,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -42,12 +42,15 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
     setImageLoaded(false);
   }, [currentIndex, images.length]);
 
-  const goToSlide = useCallback((index: number) => {
-    if (index === currentIndex) return;
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
-    setImageLoaded(false);
-  }, [currentIndex]);
+  const goToSlide = useCallback(
+    (index: number) => {
+      if (index === currentIndex) return;
+      setDirection(index > currentIndex ? 1 : -1);
+      setCurrentIndex(index);
+      setImageLoaded(false);
+    },
+    [currentIndex]
+  );
 
   // Auto-play functionality
   useEffect(() => {
@@ -65,22 +68,22 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
   // Keyboard navigation
   useEffect(() => {
     function handleKeyPress(event: KeyboardEvent): void {
-      if (event.key === 'ArrowLeft') {
+      if (event.key === "ArrowLeft") {
         goToPrevious();
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === "ArrowRight") {
         goToNext();
       }
-    };
+    }
 
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return function cleanup() {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [goToPrevious, goToNext]);
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? '100%' : '-100%',
+      x: direction > 0 ? "100%" : "-100%",
       opacity: 0,
       scale: 0.95,
       rotateY: direction > 0 ? 15 : -15,
@@ -94,44 +97,44 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? '100%' : '-100%',
+      x: direction < 0 ? "100%" : "-100%",
       opacity: 0,
       scale: 0.95,
       rotateY: direction < 0 ? 15 : -15,
-    })
+    }),
   };
 
   const buttonVariants = {
     initial: { opacity: 0, scale: 0.8 },
     animate: { opacity: 1, scale: 1 },
-    hover: { 
-      scale: 1.1, 
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-      transition: { duration: 0.2 }
+    hover: {
+      scale: 1.1,
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      transition: { duration: 0.2 },
     },
-    tap: { scale: 0.95 }
+    tap: { scale: 0.95 },
   };
 
   const indicatorVariants = {
-    inactive: { 
-      scale: 1, 
+    inactive: {
+      scale: 1,
       opacity: 0.5,
-      backgroundColor: 'rgba(255, 255, 255, 0.5)'
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
     },
-    active: { 
-      scale: 1.2, 
+    active: {
+      scale: 1.2,
       opacity: 1,
-      backgroundColor: 'rgba(255, 255, 255, 0.9)'
-    }
+      backgroundColor: "rgba(255, 255, 255, 0.9)",
+    },
   };
 
   const MotionDiv = motion.div as React.FC<CustomDivProps>;
 
   return (
-    <div 
-      className='h-full w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <div
+      className="h-full w-full relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner"
+      onMouseEnter={() => { setIsHovered(true); }}
+      onMouseLeave={() => { setIsHovered(false); }}
     >
       {/* Loading overlay */}
       <AnimatePresence>
@@ -153,11 +156,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 
       {/* Image container */}
       <div className="h-full w-full relative perspective-1000">
-        <AnimatePresence
-          initial={false}
-          custom={direction}
-          mode="wait"
-        >
+        <AnimatePresence initial={false} custom={direction} mode="wait">
           <MotionDiv
             key={currentIndex}
             custom={direction}
@@ -166,22 +165,20 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
             animate="center"
             exit="exit"
             transition={{
-              x: { type: 'spring', stiffness: 300, damping: 30 },
+              x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.3 },
               scale: { duration: 0.3 },
-              rotateY: { duration: 0.4, ease: "easeOut" }
+              rotateY: { duration: 0.4, ease: "easeOut" },
             }}
-            className='h-full w-full flex items-center justify-center absolute top-0 left-0'
+            className="h-full w-full flex items-center justify-center absolute top-0 left-0"
           >
             <motion.img
               src={images[currentIndex] ?? fallbackImage}
               alt={`Slide ${currentIndex + 1}`}
-              className='max-h-full max-w-full object-contain rounded-lg shadow-lg'
-              onLoad={() => {
-                setImageLoaded(true);
-              }}
-              initial={{ filter: 'blur(4px)' }}
-              animate={{ filter: imageLoaded ? 'blur(0px)' : 'blur(4px)' }}
+              className="max-h-full max-w-full object-contain rounded-lg shadow-lg"
+              onLoad={() => { setImageLoaded(true); }}
+              initial={{ filter: "blur(4px)" }}
+              animate={{ filter: imageLoaded ? "blur(0px)" : "blur(4px)" }}
               transition={{ duration: 0.3 }}
             />
           </MotionDiv>
@@ -200,10 +197,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
                 exit="initial"
                 whileHover="hover"
                 whileTap="tap"
-                onClick={() => {
-                  goToPrevious();
-                }}
-                className='absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20'
+                onClick={() => { goToPrevious(); }}
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20"
                 aria-label="Imagen anterior"
               >
                 <ChevronLeft size={20} />
@@ -215,10 +210,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
                 exit="initial"
                 whileHover="hover"
                 whileTap="tap"
-                onClick={() => {
-                  goToNext();
-                }}
-                className='absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20'
+                onClick={() => { goToNext(); }}
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20"
                 aria-label="Siguiente imagen"
               >
                 <ChevronRight size={20} />
@@ -230,8 +223,8 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
 
       {/* Indicators */}
       {images.length > 1 && showIndicators && (
-        <motion.div 
-          className='absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10'
+        <motion.div
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -240,13 +233,11 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
             <motion.button
               key={index}
               variants={indicatorVariants}
-              animate={index === currentIndex ? 'active' : 'inactive'}
+              animate={index === currentIndex ? "active" : "inactive"}
               whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                goToSlide(index);
-              }}
-              className='w-2 h-2 rounded-full backdrop-blur-sm border border-white/30 transition-all duration-300'
+              onClick={() => { goToSlide(index); }}
+              className="w-2 h-2 rounded-full backdrop-blur-sm border border-white/30 transition-all duration-300"
               aria-label={`Ir a imagen ${index + 1}`}
             />
           ))}
@@ -257,12 +248,12 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
       {autoPlay && images.length > 1 && (
         <motion.div
           className="absolute bottom-0 left-0 h-1 bg-white/30 z-10"
-          initial={{ width: '0%' }}
-          animate={{ width: '100%' }}
-          transition={{ 
-            duration: autoPlayInterval / 1000, 
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{
+            duration: autoPlayInterval / 1000,
             ease: "linear",
-            repeat: Infinity 
+            repeat: Infinity,
           }}
         />
       )}
