@@ -2,6 +2,7 @@
 import React, { type JSX, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 function Header(): JSX.Element {
   const [animatedTitle, setAnimatedTitle] = useState<string[]>([]);
@@ -72,13 +73,22 @@ function Header(): JSX.Element {
                   : "opacity-0 blur-md transform translate-y-8"
               }`}
             >
-              <Image
-                src="/logo-huellas-opt.png"
-                alt="Logo de Protectora Huellas"
-                width={65}
-                height={65}
-                className="-rotate-12"
-              />
+              <Link href="/" aria-label="Ir a inicio">
+  <motion.div
+    whileTap={{ scale: 0.88, rotate: 10 }}
+    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+    className="inline-block"
+  >
+    <Image
+      src="/logo-huellas-opt.png"
+      alt="Logo de Protectora Huellas"
+      width={65}
+      height={65}
+      className="-rotate-12 cursor-pointer transition-transform duration-200 hover:scale-105"
+      priority
+    />
+  </motion.div>
+</Link>
             </div>
             <div className="text-center md:text-left">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground h-8 flex items-center">
