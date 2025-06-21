@@ -18,3 +18,11 @@ export interface TursoDataResponse {
   rowsAffected: number;
   lastInsertRowid: number | undefined;
 }
+
+export interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  image: string;
+  content: string;
+}

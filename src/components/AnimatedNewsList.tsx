@@ -1,13 +1,13 @@
 "use client";
+import type { NewsItem } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface NewsItem {
-  id: number;
-  title: string;
-  date: string;
-  image: string;
-  summary: string;
-  content: string;
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("es-ES", {
+    day: "numeric",
+    month: "long",
+  });
 }
 
 export default function AnimatedNewsList({
@@ -48,10 +48,10 @@ export default function AnimatedNewsList({
                   {item.title}
                 </h2>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                  {item.date}
+                  {formatDate(item.date)}
                 </p>
                 <p className="text-base text-zinc-700 dark:text-zinc-200 line-clamp-3">
-                  {item.summary}
+                  {item.content}
                 </p>
               </div>
             </div>
