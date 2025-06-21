@@ -1,14 +1,15 @@
-import { type JSX } from 'react';
-import KnowUs from '@/components/KnowUs';
-import HelpUs from '@/components/HelpUs';
+import news from "@/data/news.json";
+import AnimatedNewsList from "@/components/AnimatedNewsList";
 
-export default function Component(): JSX.Element {
+export default function NewsPage(): JSX.Element {
   return (
-    <div className='min-h-screen bg-gradient-to-br from-white via-primary/5 to-soft-blue/10'>
-      <main className='container mx-auto px-6 py-12 md:py-24 space-y-16'>
-        <KnowUs />
-        <HelpUs />
-      </main>
-    </div>
+    <main className="min-h-screen bg-gradient-to-br from-white via-primary/5 to-soft-blue/10 py-12 px-4">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl md:text-6xl font-bold text-gradient bg-gradient-to-r from-primary via-soft-blue to-warm-orange bg-clip-text text-transparent mb-8 text-center tracking-tight">
+          Noticias
+        </h1>
+        <AnimatedNewsList news={news} />
+      </div>
+    </main>
   );
 }

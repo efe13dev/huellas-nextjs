@@ -74,21 +74,21 @@ function Header(): JSX.Element {
               }`}
             >
               <Link href="/" aria-label="Ir a inicio">
-  <motion.div
-    whileTap={{ scale: 0.88, rotate: 10 }}
-    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-    className="inline-block"
-  >
-    <Image
-      src="/logo-huellas-opt.png"
-      alt="Logo de Protectora Huellas"
-      width={65}
-      height={65}
-      className="-rotate-12 cursor-pointer transition-transform duration-200 hover:scale-105"
-      priority
-    />
-  </motion.div>
-</Link>
+                <motion.div
+                  whileTap={{ scale: 0.88, rotate: 10 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  className="inline-block"
+                >
+                  <Image
+                    src="/logo-huellas-opt.png"
+                    alt="Logo de Protectora Huellas"
+                    width={65}
+                    height={65}
+                    className="-rotate-12 cursor-pointer transition-transform duration-200 hover:scale-105"
+                    priority
+                  />
+                </motion.div>
+              </Link>
             </div>
             <div className="text-center md:text-left">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground h-8 flex items-center">
@@ -130,16 +130,10 @@ function Header(): JSX.Element {
 
           <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             <Link
-              href="/news"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
-            >
-              Noticias
-            </Link>
-            <Link
               href="/"
               className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
             >
-              Inicio
+              Noticias
             </Link>
             <Link
               href="/adoptions"
@@ -148,10 +142,10 @@ function Header(): JSX.Element {
               Adopciones
             </Link>
             <Link
-              href="/contact"
+              href="/about"
               className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
             >
-              Contacto
+              Quiénes somos
             </Link>
             <Link
               href="#"
