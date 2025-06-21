@@ -21,14 +21,12 @@ export default function AnimatedNewsList({
         {news.map((item, idx) => (
           <motion.article
             key={item.id}
-            initial={{ opacity: 0, y: 40, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.98 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{
-              duration: 0.5,
-              delay: idx * 0.13,
-              type: "spring",
-              stiffness: 60,
+              duration: 0.6,
+              delay: idx * 0.15,
             }}
             className="rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-6 transition hover:scale-[1.015] hover:shadow-2xl"
           >
