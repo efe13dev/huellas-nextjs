@@ -130,6 +130,12 @@ function Header(): JSX.Element {
 
           <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             <Link
+              href="/news"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
+            >
+              Noticias
+            </Link>
+            <Link
               href="/"
               className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
             >
