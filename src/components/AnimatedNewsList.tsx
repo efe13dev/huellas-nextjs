@@ -30,27 +30,45 @@ export default function AnimatedNewsList({
   const totalPages = Math.ceil(news.length / itemsPerPage);
   const contentRefs = useRef<Record<string, HTMLParagraphElement>>({});
 
-  // --- NUEVO: refs y estado para altura máxima ---
-  const listContainerRef = useRef<HTMLDivElement>(null);
-  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+  // --- NUEVO: refs y estado para altura dinámica ---
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerHeight, setContainerHeight] = useState<number | undefined>(undefined);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Medir altura al montar y al cambiar de página
+  // Medir altura al montar, al cambiar de página y al expandir/contraer
   useEffect(() => {
-    if (listContainerRef.current != null) {
-      const currentHeight = listContainerRef.current.offsetHeight;
-      setMaxHeight(prev => (prev === undefined ? currentHeight : Math.max(prev, currentHeight)));
-    }
-  }, [currentPage, news]);
+    const updateHeight = (): void => {
+      if (containerRef.current != null && !isTransitioning) {
+        // Medir altura natural del contenido
+        const tempHeight = containerRef.current.style.height;
+        containerRef.current.style.height = 'auto';
+        const currentHeight = containerRef.current.offsetHeight;
+        containerRef.current.style.height = tempHeight;
+        
+        setContainerHeight(currentHeight);
+      }
+    };
+
+    // Usar timeout para asegurar que el DOM se haya actualizado
+    const timeoutId = setTimeout(() => {
+      updateHeight();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [currentPage, news, expandedItems, isTransitioning]);
 
   // Para accesibilidad: mover foco al principio de la lista al cambiar de página
-  const topRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (topRef.current != null) {
-      topRef.current.focus();
+    if (containerRef.current != null) {
+      containerRef.current.focus();
     }
   }, [currentPage]);
 
   const toggleExpanded = (itemId: string): void => {
+    setIsTransitioning(true);
+    
     setExpandedItems((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(itemId)) {
@@ -58,6 +76,24 @@ export default function AnimatedNewsList({
       } else {
         newSet.add(itemId);
       }
+      
+      // Actualizar altura después de cambiar el estado
+      setTimeout(() => {
+        if (containerRef.current != null) {
+          const tempHeight = containerRef.current.style.height;
+          containerRef.current.style.height = 'auto';
+          const newHeight = containerRef.current.offsetHeight;
+          containerRef.current.style.height = tempHeight;
+          
+          setContainerHeight(newHeight);
+          
+          // Finalizar transición
+          setTimeout(() => {
+            setIsTransitioning(false);
+          }, 400);
+        }
+      }, 50); // Tiempo mínimo para que se aplique el cambio de estado
+      
       return newSet;
     });
   };
@@ -116,16 +152,12 @@ export default function AnimatedNewsList({
   return (
     <>
       <div
-        ref={el => {
-          topRef.current = el;
-          listContainerRef.current = el;
-        }}
+        ref={containerRef}
         tabIndex={-1}
-        className="flex flex-col gap-8 outline-none"
+        className="flex flex-col gap-4 sm:gap-8 outline-none pb-6 sm:pb-8"
         style={{
-          height: maxHeight,
+          height: containerHeight ?? 280,
           transition: 'height 0.4s cubic-bezier(0.4, 0.1, 0.2, 1)',
-          minHeight: 280, // Altura mínima para evitar parpadeos en el primer render
         }}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -135,7 +167,7 @@ export default function AnimatedNewsList({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: pageDirection > 0 ? -60 : 60 }}
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-4 sm:gap-8"
           >
             {news
               .slice(
@@ -158,12 +190,12 @@ export default function AnimatedNewsList({
                       duration: 0.6,
                       delay: idx * 0.15,
                     }}
-                    className="rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-6 transition-all duration-300 hover:shadow-2xl"
+                    className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl"
                   >
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="md:w-1/3 flex-shrink-0">
+                    <div className="flex flex-col gap-4 sm:gap-6 md:flex-row">
+                      <div className="w-full md:w-1/3 flex-shrink-0">
                         <motion.div
-                          className="aspect-[4/3] rounded-xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 border border-white/10 cursor-pointer group relative"
+                          className="aspect-[16/9] sm:aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 border border-white/10 cursor-pointer group relative"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => {
@@ -181,10 +213,10 @@ export default function AnimatedNewsList({
                             <motion.div
                               initial={{ scale: 0.8, opacity: 0 }}
                               whileHover={{ scale: 1, opacity: 1 }}
-                              className="bg-white/90 dark:bg-zinc-800/90 rounded-full p-3 backdrop-blur-sm"
+                              className="bg-white/90 dark:bg-zinc-800/90 rounded-full p-2 sm:p-3 backdrop-blur-sm"
                             >
                               <svg
-                                className="w-6 h-6 text-zinc-700 dark:text-zinc-300"
+                                className="w-4 h-4 sm:w-6 sm:h-6 text-zinc-700 dark:text-zinc-300"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -202,11 +234,11 @@ export default function AnimatedNewsList({
                       </div>
                       <div className="flex-1 flex flex-col gap-2 justify-center">
                         <h2
-                          className={`text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2 transition-all duration-300 ${expanded ? 'whitespace-normal' : 'line-clamp-2'}`}
+                          className={`text-lg sm:text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-1 sm:mb-2 transition-all duration-300 ${expanded ? 'whitespace-normal' : 'line-clamp-2'}`}
                         >
                           {item.title}
                         </h2>
-                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                        <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-2">
                           {formatDate(item.date)}
                         </p>
 
@@ -228,7 +260,7 @@ export default function AnimatedNewsList({
                             ref={(el) => {
                               measureContentHeight(el, itemId);
                             }}
-                            className="text-base text-zinc-700 dark:text-zinc-200 leading-6"
+                            className="text-sm sm:text-base text-zinc-700 dark:text-zinc-200 leading-5 sm:leading-6"
                             style={{
                               display: "-webkit-box",
                               WebkitBoxOrient: "vertical",
@@ -264,7 +296,7 @@ export default function AnimatedNewsList({
                             onClick={() => {
                               toggleExpanded(item.id.toString());
                             }}
-                            className="flex items-center gap-2 mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors self-start group"
+                            className="flex items-center gap-1 sm:gap-2 mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors self-start group"
                           >
                             <motion.span
                               animate={{
@@ -323,7 +355,7 @@ export default function AnimatedNewsList({
       {/* Controles de paginación */}
       {totalPages > 1 && (
         <nav
-          className="flex justify-center items-center gap-2 mt-16 select-none"
+          className="flex justify-center items-center gap-2 mt-6 sm:mt-12 mb-12 sm:mb-16 select-none"
           aria-label="Paginación de noticias"
         >
           <button
@@ -333,7 +365,7 @@ export default function AnimatedNewsList({
               setCurrentPage((p) => Math.max(1, p - 1));
             }}
             disabled={currentPage === 1}
-            className={`rounded-full px-3 py-1 text-sm font-medium border border-white/20 dark:border-zinc-700/40 bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur transition-colors duration-200 hover:bg-white/80 dark:hover:bg-zinc-900/70 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400/50`}
+            className={`rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium border border-white/20 dark:border-zinc-700/40 bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur transition-colors duration-200 hover:bg-white/80 dark:hover:bg-zinc-900/70 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400/50`}
           >
             ←
           </button>
@@ -345,7 +377,7 @@ export default function AnimatedNewsList({
                 setPageDirection(i + 1 > currentPage ? 1 : -1);
                 setCurrentPage(i + 1);
               }}
-              className={`rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold border border-white/20 dark:border-zinc-700/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/50
+              className={`rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-semibold border border-white/20 dark:border-zinc-700/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/50
                 ${
                   currentPage === i + 1
                     ? "bg-zinc-900/80 dark:bg-zinc-100/80 text-white dark:text-zinc-900 shadow"
@@ -362,7 +394,7 @@ export default function AnimatedNewsList({
               setCurrentPage((p) => Math.min(totalPages, p + 1));
             }}
             disabled={currentPage === totalPages}
-            className={`rounded-full px-3 py-1 text-sm font-medium border border-white/20 dark:border-zinc-700/40 bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur transition-colors duration-200 hover:bg-white/80 dark:hover:bg-zinc-900/70 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400/50`}
+            className={`rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium border border-white/20 dark:border-zinc-700/40 bg-white/50 dark:bg-zinc-900/50 shadow-sm backdrop-blur transition-colors duration-200 hover:bg-white/80 dark:hover:bg-zinc-900/70 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-400/50`}
           >
             →
           </button>
