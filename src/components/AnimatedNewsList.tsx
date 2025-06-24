@@ -30,6 +30,18 @@ export default function AnimatedNewsList({
   const totalPages = Math.ceil(news.length / itemsPerPage);
   const contentRefs = useRef<Record<string, HTMLParagraphElement>>({});
 
+  // --- NUEVO: refs y estado para altura máxima ---
+  const listContainerRef = useRef<HTMLDivElement>(null);
+  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+
+  // Medir altura al montar y al cambiar de página
+  useEffect(() => {
+    if (listContainerRef.current != null) {
+      const currentHeight = listContainerRef.current.offsetHeight;
+      setMaxHeight(prev => (prev === undefined ? currentHeight : Math.max(prev, currentHeight)));
+    }
+  }, [currentPage, news]);
+
   // Para accesibilidad: mover foco al principio de la lista al cambiar de página
   const topRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -93,9 +105,17 @@ export default function AnimatedNewsList({
   return (
     <>
       <div
-        ref={topRef}
+        ref={el => {
+          topRef.current = el;
+          listContainerRef.current = el;
+        }}
         tabIndex={-1}
         className="flex flex-col gap-8 outline-none"
+        style={{
+          height: maxHeight,
+          transition: 'height 0.4s cubic-bezier(0.4, 0.1, 0.2, 1)',
+          minHeight: 280, // Altura mínima para evitar parpadeos en el primer render
+        }}
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -170,9 +190,11 @@ export default function AnimatedNewsList({
                         </motion.div>
                       </div>
                       <div className="flex-1 flex flex-col gap-2 justify-center">
-                        <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
-                          {item.title}
-                        </h2>
+                        <h2
+  className={`text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2 transition-all duration-300 ${expanded ? 'whitespace-normal' : 'line-clamp-2'}`}
+>
+  {item.title}
+</h2>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
                           {formatDate(item.date)}
                         </p>
@@ -197,16 +219,12 @@ export default function AnimatedNewsList({
                                 contentRefs.current[itemId] = el;
                               }
                             }}
-                            className="text-base text-zinc-700 dark:text-zinc-200 leading-6"
+                            className={`text-base text-zinc-700 dark:text-zinc-200 leading-6 transition-all duration-300 ${expanded ? '' : isLongContent ? 'line-clamp-3' : ''}`}
                             style={{
-                              display: "-webkit-box",
-                              WebkitBoxOrient: "vertical",
-                              WebkitLineClamp: expanded
-                                ? "unset"
-                                : isLongContent
-                                  ? 3
-                                  : "unset",
-                              overflow: "hidden",
+                              display: expanded ? 'block' : '-webkit-box',
+                              WebkitBoxOrient: 'vertical',
+                              WebkitLineClamp: expanded ? 'unset' : isLongContent ? 3 : 'unset',
+                              overflow: 'hidden',
                             }}
                           >
                             {item.content}
@@ -295,7 +313,7 @@ export default function AnimatedNewsList({
       {/* Controles de paginación */}
       {totalPages > 1 && (
         <nav
-          className="flex justify-center items-center gap-2 mt-8 select-none"
+          className="flex justify-center items-center gap-2 mt-16 select-none"
           aria-label="Paginación de noticias"
         >
           <button
