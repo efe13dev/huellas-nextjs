@@ -86,21 +86,32 @@ export default function AnimatedNewsList({
     };
   }, [selectedImage]);
 
-  // Medir altura del contenido cuando se monta el componente
-  useEffect(() => {
-    const heights: Record<string, number> = {};
-    Object.entries(contentRefs.current).forEach(([id, ref]) => {
-      if (ref !== null && ref !== undefined) {
+  // Función para medir altura dinámicamente cuando se asigna el ref
+  const measureContentHeight = (el: HTMLParagraphElement | null, itemId: string): void => {
+    if (el !== null) {
+      contentRefs.current[itemId] = el;
+      
+      // Medir altura si no existe ya
+      if (contentHeights[itemId] == null) {
         // Temporalmente remover line-clamp para medir altura completa
-        ref.style.display = "-webkit-box";
-        ref.style.webkitLineClamp = "unset";
-        heights[id] = ref.scrollHeight;
-        // Restaurar line-clamp
-        ref.style.webkitLineClamp = "3";
+        const originalDisplay = el.style.display;
+        const originalLineClamp = el.style.webkitLineClamp;
+        
+        el.style.display = "-webkit-box";
+        el.style.webkitLineClamp = "unset";
+        const height = el.scrollHeight;
+        
+        // Restaurar estilos originales
+        el.style.display = originalDisplay;
+        el.style.webkitLineClamp = originalLineClamp;
+        
+        setContentHeights(prev => ({
+          ...prev,
+          [itemId]: height
+        }));
       }
-    });
-    setContentHeights(heights);
-  }, [news]);
+    }
+  };
 
   return (
     <>
@@ -191,10 +202,10 @@ export default function AnimatedNewsList({
                       </div>
                       <div className="flex-1 flex flex-col gap-2 justify-center">
                         <h2
-  className={`text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2 transition-all duration-300 ${expanded ? 'whitespace-normal' : 'line-clamp-2'}`}
->
-  {item.title}
-</h2>
+                          className={`text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2 transition-all duration-300 ${expanded ? 'whitespace-normal' : 'line-clamp-2'}`}
+                        >
+                          {item.title}
+                        </h2>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
                           {formatDate(item.date)}
                         </p>
@@ -206,25 +217,24 @@ export default function AnimatedNewsList({
                               ? fullHeight
                               : isLongContent
                                 ? 72
-                                : "auto", // 72px ≈ 3 líneas
+                                : (contentHeights[itemId] != null && contentHeights[itemId] > 0) ? contentHeights[itemId] : 72, // Usar altura calculada en lugar de "auto"
                           }}
                           transition={{
-                            duration: 0.5,
+                            duration: 0.6, // Aumentar duración para mejor percepción
                             ease: [0.25, 0.46, 0.45, 0.94], // Curva suave y natural
                           }}
                         >
                           <p
                             ref={(el) => {
-                              if (el !== null) {
-                                contentRefs.current[itemId] = el;
-                              }
+                              measureContentHeight(el, itemId);
                             }}
-                            className={`text-base text-zinc-700 dark:text-zinc-200 leading-6 transition-all duration-300 ${expanded ? '' : isLongContent ? 'line-clamp-3' : ''}`}
+                            className="text-base text-zinc-700 dark:text-zinc-200 leading-6"
                             style={{
-                              display: expanded ? 'block' : '-webkit-box',
-                              WebkitBoxOrient: 'vertical',
-                              WebkitLineClamp: expanded ? 'unset' : isLongContent ? 3 : 'unset',
-                              overflow: 'hidden',
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: expanded ? "unset" : isLongContent ? 3 : "unset",
+                              overflow: "hidden",
+                              transition: "all 0.3s ease-out", // Transición suave para cambios de estilo
                             }}
                           >
                             {item.content}
