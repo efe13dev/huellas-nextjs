@@ -4,6 +4,8 @@ import { getNews } from "@/lib/actions";
 
 // Server Component para cargar las noticias
 async function NewsListLoader(): Promise<JSX.Element> {
+  // Delay artificial de 2 segundos
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const news = await getNews();
   return <AnimatedNewsList news={news} />;
 }
