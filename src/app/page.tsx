@@ -1,7 +1,8 @@
-import news from "@/data/news.json";
+import { getNews } from "@/lib/actions";
 import AnimatedNewsList from "@/components/AnimatedNewsList";
 
-export default function NewsPage(): JSX.Element {
+export default async function NewsPage(): Promise<JSX.Element> {
+  const news = await getNews();
   return (
     <main className="min-h-screen pb-24 w-full bg-gradient-to-br from-white via-primary/5 to-soft-blue/10 py-12 px-4 flex flex-col">
       <div className="max-w-3xl mx-auto">

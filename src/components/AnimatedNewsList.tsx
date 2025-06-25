@@ -147,7 +147,10 @@ export default function AnimatedNewsList({
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => {
-                          openImageModal(item.image, item.title);
+                          const imageUrl = item.image ?? '';
+                          if (imageUrl.trim() !== '') {
+                            openImageModal(imageUrl, item.title);
+                          }
                         }}
                       >
                         <img

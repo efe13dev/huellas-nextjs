@@ -20,9 +20,9 @@ export interface TursoDataResponse {
 }
 
 export interface NewsItem {
-  id: number;
+  id: string; // UUID
   title: string;
   date: string;
-  image: string;
+  image?: string;
   content: string;
 }
