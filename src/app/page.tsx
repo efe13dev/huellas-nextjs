@@ -1,8 +1,14 @@
-import { getNews } from "@/lib/actions";
+import { Suspense } from "react";
 import AnimatedNewsList from "@/components/AnimatedNewsList";
+import { getNews } from "@/lib/actions";
 
-export default async function NewsPage(): Promise<JSX.Element> {
+// Server Component para cargar las noticias
+async function NewsListLoader(): Promise<JSX.Element> {
   const news = await getNews();
+  return <AnimatedNewsList news={news} />;
+}
+
+export default function NewsPage(): JSX.Element {
   return (
     <main className="min-h-screen pb-24 w-full bg-gradient-to-br from-white via-primary/5 to-soft-blue/10 py-12 px-4 flex flex-col">
       <div className="max-w-3xl mx-auto">
@@ -16,8 +22,10 @@ export default async function NewsPage(): Promise<JSX.Element> {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-warm-orange mx-auto rounded-full"></div>
         </div>
-
-        <AnimatedNewsList news={news} />
+        {/* Suspense para cargar solo la lista */}
+        <Suspense fallback={<div className="text-center text-lg text-zinc-400">Cargando noticias...</div>}>
+          <NewsListLoader />
+        </Suspense>
       </div>
     </main>
   );

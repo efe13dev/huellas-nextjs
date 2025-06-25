@@ -43,7 +43,9 @@ export default function AnimatedNewsList({
       setShowScrollTop(window.scrollY > 300);
     };
     window.addEventListener("scroll", handleScroll);
-    return () => { window.removeEventListener("scroll", handleScroll); };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // Scroll suave al inicio
@@ -109,7 +111,7 @@ export default function AnimatedNewsList({
           >
             {visibleNews.map((item, idx) => {
               const expanded = isExpanded(item.id.toString());
-              const isLongContent = item.content.length > 200;
+              const isLongContent = item.content.length > 166;
               // Animar elementos nuevos (últimos cargados) o si es la carga inicial
               const shouldAnimate =
                 visibleCount <= INITIAL_COUNT ||
@@ -147,8 +149,8 @@ export default function AnimatedNewsList({
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => {
-                          const imageUrl = item.image ?? '';
-                          if (imageUrl.trim() !== '') {
+                          const imageUrl = item.image ?? "";
+                          if (imageUrl.trim() !== "") {
                             openImageModal(imageUrl, item.title);
                           }
                         }}
