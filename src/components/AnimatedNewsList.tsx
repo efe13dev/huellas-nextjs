@@ -4,6 +4,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { formatDate } from "@/lib/utils";
 
+// Icono elegante para el botón (chevron up)
+const ChevronUpIcon = (): JSX.Element => (
+  <svg
+    className="w-5 h-5 sm:w-6 sm:h-6"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    viewBox="0 0 24 24"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19 15l-7-7-7 7" />
+  </svg>
+);
+
 export default function AnimatedNewsList({
   news,
 }: {
@@ -20,6 +33,23 @@ export default function AnimatedNewsList({
     src: string;
     alt: string;
   } | null>(null);
+
+  // Estado para mostrar el botón de scroll to top
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Detectar scroll para mostrar/ocultar el botón
+  useEffect(() => {
+    const handleScroll = (): void => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => { window.removeEventListener("scroll", handleScroll); };
+  }, []);
+
+  // Scroll suave al inicio
+  const handleScrollToTop = (): void => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const toggleExpanded = (itemId: string): void => {
     setExpandedItems((prev) => {
@@ -81,7 +111,9 @@ export default function AnimatedNewsList({
               const expanded = isExpanded(item.id.toString());
               const isLongContent = item.content.length > 200;
               // Animar elementos nuevos (últimos cargados) o si es la carga inicial
-              const shouldAnimate = visibleCount <= INITIAL_COUNT || idx >= visibleCount - LOAD_MORE_COUNT;
+              const shouldAnimate =
+                visibleCount <= INITIAL_COUNT ||
+                idx >= visibleCount - LOAD_MORE_COUNT;
 
               return (
                 <motion.article
@@ -247,6 +279,24 @@ export default function AnimatedNewsList({
             </motion.button>
           </motion.div>
         )}
+
+        {/* Botón flotante scroll to top */}
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
+              key="scroll-top"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              aria-label="Volver arriba"
+              onClick={handleScrollToTop}
+              className="fixed z-40 bottom-6 right-6 sm:bottom-8 sm:right-8 p-3 sm:p-4 rounded-full bg-white/80 dark:bg-zinc-900/80 shadow-xl border border-white/30 dark:border-zinc-700/40 backdrop-blur hover:bg-white dark:hover:bg-zinc-900 transition-all duration-300 flex items-center justify-center group"
+            >
+              <ChevronUpIcon />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Modal de imagen */}
