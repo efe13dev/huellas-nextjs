@@ -124,8 +124,8 @@ export default function AnimatedNewsList({
                     shouldAnimate
                       ? {
                           opacity: 0,
-                          y: 20,
-                          scale: 0.98,
+                          y: 48,
+                          scale: 0.94,
                         }
                       : false
                   }
@@ -134,11 +134,12 @@ export default function AnimatedNewsList({
                     y: 0,
                     scale: 1,
                   }}
-                  transition={{
-                    duration: 0.6,
-                    delay: shouldAnimate ? (idx % LOAD_MORE_COUNT) * 0.05 : 0,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
+                  transition={shouldAnimate ? {
+                    type: "spring",
+                    stiffness: 110,
+                    damping: 20,
+                    delay: (idx % LOAD_MORE_COUNT) * 0.13,
+                  } : {}}
                   className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl"
                 >
                   <div className="flex flex-col gap-4 sm:gap-6 md:flex-row">
@@ -197,10 +198,17 @@ export default function AnimatedNewsList({
 
                       <div className="overflow-hidden">
                         <motion.p
+                          initial={false}
                           animate={{
-                            height: expanded ? "auto" : "4.5rem", // ~3 líneas
+                            height: expanded ? "auto" : "4.5rem",
+                            opacity: expanded ? 1 : 0.92,
+                            y: expanded ? 0 : 8,
                           }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          transition={{
+                            height: { duration: 0.5, ease: "easeInOut" },
+                            opacity: { duration: 0.35, ease: "easeOut" },
+                            y: { duration: 0.35, ease: "easeOut" },
+                          }}
                           className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed ${
                             expanded ? "" : "line-clamp-3"
                           }`}
