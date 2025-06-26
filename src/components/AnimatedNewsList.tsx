@@ -22,6 +22,10 @@ export default function AnimatedNewsList({
 }: {
   news: NewsItem[];
 }): JSX.Element {
+  // Estado para alturas medidas de cada noticia
+  const [measuredHeights, setMeasuredHeights] = useState<
+    Record<string, number>
+  >({});
   // Estados para scroll infinito
   const INITIAL_COUNT = 5;
   const LOAD_MORE_COUNT = 5;
@@ -111,7 +115,7 @@ export default function AnimatedNewsList({
           >
             {visibleNews.map((item, idx) => {
               const expanded = isExpanded(item.id.toString());
-              const isLongContent = item.content.length > 166;
+              const isLongContent = item.content.length > 175;
               // Animar elementos nuevos (últimos cargados) o si es la carga inicial
               const shouldAnimate =
                 visibleCount <= INITIAL_COUNT ||
@@ -134,12 +138,16 @@ export default function AnimatedNewsList({
                     y: 0,
                     scale: 1,
                   }}
-                  transition={shouldAnimate ? {
-                    type: "spring",
-                    stiffness: 110,
-                    damping: 20,
-                    delay: (idx % LOAD_MORE_COUNT) * 0.13,
-                  } : {}}
+                  transition={
+                    shouldAnimate
+                      ? {
+                          type: "spring",
+                          stiffness: 110,
+                          damping: 20,
+                          delay: (idx % LOAD_MORE_COUNT) * 0.13,
+                        }
+                      : {}
+                  }
                   className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl"
                 >
                   <div className="flex flex-col gap-4 sm:gap-6 md:flex-row">
@@ -196,29 +204,48 @@ export default function AnimatedNewsList({
                         {formatDate(item.date)}
                       </p>
 
-                      <div className="overflow-hidden">
-                        <motion.p
-                          initial={false}
-                          animate={{
-                            height: expanded ? "auto" : "4.5rem",
-                            opacity: expanded ? 1 : 0.92,
-                            y: expanded ? 0 : 8,
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          height: expanded
+                            ? measuredHeights?.[item.id] != null
+                              ? measuredHeights[item.id]
+                              : "auto"
+                            : "calc(1.5em * 3)", // 3 líneas de alto, line-height: 1.5
+                        }}
+                        transition={{
+                          height: { duration: 0.5, ease: "easeInOut" },
+                        }}
+                        style={{
+                          overflow: "hidden",
+                          maskImage: !expanded
+                            ? "linear-gradient(180deg, #000 90%, transparent 100%)"
+                            : undefined,
+                          WebkitMaskImage: !expanded
+                            ? "linear-gradient(180deg, #000 90%, transparent 100%)"
+                            : undefined,
+                        }}
+                      >
+                        <p
+                          ref={(el) => {
+                            if (el != null && expanded) {
+                              setTimeout(() => {
+                                const height = el.scrollHeight;
+                                if (!isNaN(height)) {
+                                  setMeasuredHeights((prev) => ({
+                                    ...prev,
+                                    [item.id]: height,
+                                  }));
+                                }
+                              }, 10);
+                            }
                           }}
-                          transition={{
-                            height: { duration: 0.5, ease: "easeInOut" },
-                            opacity: { duration: 0.35, ease: "easeOut" },
-                            y: { duration: 0.35, ease: "easeOut" },
-                          }}
-                          className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed ${
-                            expanded ? "" : "line-clamp-3"
-                          }`}
-                          style={{
-                            overflow: "hidden",
-                          }}
+                          className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed${expanded ? "" : " line-clamp-3 pb-2"}`}
+                          style={{ margin: 0 }}
                         >
                           {item.content}
-                        </motion.p>
-                      </div>
+                        </p>
+                      </motion.div>
 
                       {isLongContent && (
                         <motion.button

@@ -4,8 +4,6 @@ import { getNews } from "@/lib/actions";
 
 // Server Component para cargar las noticias
 async function NewsListLoader(): Promise<JSX.Element> {
-  // Delay artificial de 2 segundos
-  await new Promise((resolve) => setTimeout(resolve, 2000));
   const news = await getNews();
   return <AnimatedNewsList news={news} />;
 }
@@ -25,7 +23,13 @@ export default function NewsPage(): JSX.Element {
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-warm-orange mx-auto rounded-full"></div>
         </div>
         {/* Suspense para cargar solo la lista */}
-        <Suspense fallback={<div className="text-center text-lg text-zinc-400">Cargando noticias...</div>}>
+        <Suspense
+          fallback={
+            <div className="text-center text-lg text-zinc-400">
+              Cargando noticias...
+            </div>
+          }
+        >
           <NewsListLoader />
         </Suspense>
       </div>
