@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuración para evitar caché en Vercel
-  experimental: {
-    // Deshabilitar caché estático para páginas dinámicas
-    isrMemoryCacheSize: 0,
-  },
   // Headers para controlar caché
   async headers() {
     return [
