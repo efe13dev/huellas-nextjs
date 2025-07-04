@@ -51,21 +51,99 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
     }
   }, []);
 
-  // Refrescar automáticamente cada 30 segundos
+  // Polling inteligente con detección de visibilidad y conexión
   useEffect(() => {
-    // Solo refrescar si hay noticias iniciales (evitar fetch doble en mount)
+    let interval: NodeJS.Timeout | null = null;
+    const baseInterval = 30000; // 30 segundos base
+    let currentInterval = baseInterval;
+    let consecutiveNoChanges = 0;
+
+    // Solo refrescar si no hay noticias iniciales (evitar fetch doble en mount)
     if (initialNews.length === 0) {
       void fetchNews();
     }
 
-    const interval = setInterval(() => {
-      void fetchNews();
-    }, 30000); // 30 segundos
-
-    return () => {
-      clearInterval(interval);
+    const startPolling = (): void => {
+      if (interval !== null) clearInterval(interval);
+      
+      interval = setInterval(() => {
+        // Solo hacer petición si la pestaña está visible y hay conexión
+        if (!document.hidden && navigator.onLine) {
+          const previousCount = news.length;
+          void fetchNews().then(() => {
+            // Polling adaptativo: si no hay cambios, reducir frecuencia
+            if (news.length === previousCount) {
+              consecutiveNoChanges++;
+              if (consecutiveNoChanges >= 3) {
+                // Después de 3 intentos sin cambios, duplicar intervalo (máximo 2 minutos)
+                currentInterval = Math.min(currentInterval * 1.5, 120000);
+                startPolling(); // Reiniciar con nuevo intervalo
+              }
+            } else {
+              // Si hay cambios, volver a frecuencia normal
+              consecutiveNoChanges = 0;
+              if (currentInterval !== baseInterval) {
+                currentInterval = baseInterval;
+                startPolling(); // Reiniciar con intervalo normal
+              }
+            }
+          }).catch(() => {
+            // En caso de error, aumentar ligeramente el intervalo
+            currentInterval = Math.min(currentInterval * 1.2, 60000);
+          });
+        }
+      }, currentInterval);
     };
-  }, [fetchNews, initialNews.length]);
+
+    const handleVisibilityChange = (): void => {
+      if (document.hidden) {
+        // Pausar polling cuando la pestaña no está visible
+        if (interval !== null) {
+          clearInterval(interval);
+          interval = null;
+        }
+      } else {
+        // Reanudar polling y hacer petición inmediata al volver
+        void fetchNews();
+        consecutiveNoChanges = 0; // Reset contador al volver
+        currentInterval = baseInterval; // Reset intervalo al volver
+        startPolling();
+      }
+    };
+
+    const handleOnlineChange = (): void => {
+      if (navigator.onLine) {
+        // Cuando se recupera la conexión, hacer petición inmediata
+        void fetchNews();
+        if (!document.hidden && interval === null) {
+          startPolling();
+        }
+      } else {
+        // Pausar polling cuando no hay conexión
+        if (interval !== null) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
+    };
+
+    // Iniciar polling solo si la pestaña está visible y hay conexión
+    if (!document.hidden && navigator.onLine) {
+      startPolling();
+    }
+    
+    // Escuchar eventos del navegador
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('online', handleOnlineChange);
+    window.addEventListener('offline', handleOnlineChange);
+    
+    return () => {
+      if (interval !== null) clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('online', handleOnlineChange);
+      window.removeEventListener('offline', handleOnlineChange);
+    };
+  }, [fetchNews, initialNews.length, news.length]);
 
   return {
     news,
