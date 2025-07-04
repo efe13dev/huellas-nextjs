@@ -9,14 +9,27 @@ const client = createClient({
 });
 
 export async function getNews(): Promise<NewsItem[]> {
-  const result = await client.execute('SELECT * FROM news ORDER BY date DESC');
-  
-  // Serializar los datos para convertirlos en objetos planos
-  return result.rows.map((row: any) => ({
-    id: String(row.id),
-    title: String(row.title),
-    content: String(row.content),
-    date: String(row.date),
-    image: row.image !== null && row.image !== undefined ? String(row.image) : undefined,
-  }));
+  try {
+    // Agregar timestamp para evitar caché
+    const timestamp = Date.now();
+    console.log(`[${new Date().toISOString()}] Fetching news from database - ${timestamp}`);
+    
+    const result = await client.execute('SELECT * FROM news ORDER BY date DESC');
+    
+    console.log(`[${new Date().toISOString()}] Found ${result.rows.length} news items`);
+    
+    // Serializar los datos para convertirlos en objetos planos
+    const newsItems = result.rows.map((row: any) => ({
+      id: String(row.id),
+      title: String(row.title),
+      content: String(row.content),
+      date: String(row.date),
+      image: row.image !== null && row.image !== undefined ? String(row.image) : undefined,
+    }));
+    
+    return newsItems;
+  } catch (error) {
+    console.error('[getNews] Error fetching news:', error);
+    throw error;
+  }
 }
