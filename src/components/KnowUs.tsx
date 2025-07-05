@@ -7,8 +7,8 @@ function KnowUs(): JSX.Element {
     <section className='relative overflow-hidden bg-card/50 backdrop-blur-sm border border-border/30 rounded-2xl shadow-lg animate-slide-in'>
       <div className='absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-60'></div>
       <div className='relative flex flex-col md:flex-row'>
-        <div className='md:w-1/2 p-8 md:p-12 lg:p-16 space-y-8 flex flex-col justify-center animate-slide-from-left'>
-          <h2 className='text-3xl lg:text-4xl font-bold text-foreground leading-tight'>
+        <div className='md:w-1/2 p-6 sm:p-8 md:p-12 lg:p-16 space-y-6 sm:space-y-8 flex flex-col justify-center animate-slide-from-left order-2 md:order-1'>
+          <h2 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight'>
             Conoce nuestra{' '}
             <span className='text-primary'>
               misión
@@ -16,7 +16,7 @@ function KnowUs(): JSX.Element {
           </h2>
           
           <div className='space-y-6 text-muted-foreground leading-relaxed'>
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               En{' '}
               <span className='font-semibold text-foreground bg-primary/10 px-2 py-1 rounded-md'>
                 Protectora Huellas
@@ -26,7 +26,7 @@ function KnowUs(): JSX.Element {
               recibe atención veterinaria, amor y la oportunidad de una nueva vida.
             </p>
             
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               Nuestro equipo de voluntarios trabaja incansablemente para asegurar
               que cada{' '}
               <span className='font-semibold text-foreground bg-primary/10 px-2 py-1 rounded-md'>
@@ -36,7 +36,7 @@ function KnowUs(): JSX.Element {
               que merecen.
             </p>
             
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               Creemos que cada animal merece una segunda oportunidad y trabajamos
               para crear un mundo donde ningún animal sufra abandono o maltrato.
             </p>
@@ -69,14 +69,15 @@ function KnowUs(): JSX.Element {
           </div>
         </div>
         
-        <div className='md:w-1/2 animate-slide-from-right'>
-          <div className='relative overflow-hidden h-full min-h-[400px]'>
+        <div className='md:w-1/2 animate-slide-from-right order-1 md:order-2'>
+          <div className='relative overflow-hidden h-64 sm:h-80 md:h-full md:min-h-[400px]'>
             <Image
               src='/know-us-image-optimized.webp'
               alt='Animales felices en la protectora'
               width={600}
               height={400}
               className='h-full w-full object-cover transition-transform duration-700 hover:scale-105'
+              priority
             />
             <div className='absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-card/20'></div>
           </div>

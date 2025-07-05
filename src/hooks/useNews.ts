@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect, useCallback } from 'react';
-import type { NewsItem } from '@/types';
+import { useState, useEffect, useCallback } from "react";
+import type { NewsItem } from "@/types";
 
 interface UseNewsReturn {
   news: NewsItem[];
@@ -20,14 +20,14 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Agregar timestamp para evitar caché del navegador
       const timestamp = Date.now();
       const response = await fetch(`/api/news?t=${timestamp}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
         },
       });
 
@@ -35,17 +35,19 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json() as { news: NewsItem[]; count: number; timestamp: string };
+      const data = (await response.json()) as {
+        news: NewsItem[];
+        count: number;
+        timestamp: string;
+      };
       setNews(data.news);
       setLastUpdated(new Date());
-      
-      // eslint-disable-next-line no-console
-      console.log(`[useNews] Updated news: ${data.count} items at ${data.timestamp}`);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+      const errorMessage =
+        err instanceof Error ? err.message : "Error desconocido";
       setError(errorMessage);
       // eslint-disable-next-line no-console
-      console.error('[useNews] Error fetching news:', err);
+      console.error("[useNews] Error fetching news:", err);
     } finally {
       setLoading(false);
     }
@@ -65,32 +67,34 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
 
     const startPolling = (): void => {
       if (interval !== null) clearInterval(interval);
-      
+
       interval = setInterval(() => {
         // Solo hacer petición si la pestaña está visible y hay conexión
         if (!document.hidden && navigator.onLine) {
           const previousCount = news.length;
-          void fetchNews().then(() => {
-            // Polling adaptativo: si no hay cambios, reducir frecuencia
-            if (news.length === previousCount) {
-              consecutiveNoChanges++;
-              if (consecutiveNoChanges >= 3) {
-                // Después de 3 intentos sin cambios, duplicar intervalo (máximo 2 minutos)
-                currentInterval = Math.min(currentInterval * 1.5, 120000);
-                startPolling(); // Reiniciar con nuevo intervalo
+          void fetchNews()
+            .then(() => {
+              // Polling adaptativo: si no hay cambios, reducir frecuencia
+              if (news.length === previousCount) {
+                consecutiveNoChanges++;
+                if (consecutiveNoChanges >= 3) {
+                  // Después de 3 intentos sin cambios, duplicar intervalo (máximo 2 minutos)
+                  currentInterval = Math.min(currentInterval * 1.5, 120000);
+                  startPolling(); // Reiniciar con nuevo intervalo
+                }
+              } else {
+                // Si hay cambios, volver a frecuencia normal
+                consecutiveNoChanges = 0;
+                if (currentInterval !== baseInterval) {
+                  currentInterval = baseInterval;
+                  startPolling(); // Reiniciar con intervalo normal
+                }
               }
-            } else {
-              // Si hay cambios, volver a frecuencia normal
-              consecutiveNoChanges = 0;
-              if (currentInterval !== baseInterval) {
-                currentInterval = baseInterval;
-                startPolling(); // Reiniciar con intervalo normal
-              }
-            }
-          }).catch(() => {
-            // En caso de error, aumentar ligeramente el intervalo
-            currentInterval = Math.min(currentInterval * 1.2, 60000);
-          });
+            })
+            .catch(() => {
+              // En caso de error, aumentar ligeramente el intervalo
+              currentInterval = Math.min(currentInterval * 1.2, 60000);
+            });
         }
       }, currentInterval);
     };
@@ -131,17 +135,17 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
     if (!document.hidden && navigator.onLine) {
       startPolling();
     }
-    
+
     // Escuchar eventos del navegador
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('online', handleOnlineChange);
-    window.addEventListener('offline', handleOnlineChange);
-    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("online", handleOnlineChange);
+    window.addEventListener("offline", handleOnlineChange);
+
     return () => {
       if (interval !== null) clearInterval(interval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('online', handleOnlineChange);
-      window.removeEventListener('offline', handleOnlineChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("online", handleOnlineChange);
+      window.removeEventListener("offline", handleOnlineChange);
     };
   }, [fetchNews, initialNews.length, news.length]);
 

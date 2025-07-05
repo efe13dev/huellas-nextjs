@@ -7,22 +7,23 @@ function HelpUs(): JSX.Element {
     <section className='relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-2xl animate-slide-in border border-slate-700/50'>
       <div className='absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-warm-orange/10 opacity-60'></div>
       <div className='relative flex flex-col md:flex-row'>
-        <div className='md:w-1/2 animate-slide-from-left'>
-          <div className='relative overflow-hidden h-full min-h-[400px]'>
+        <div className='md:w-1/2 animate-slide-from-left order-1 md:order-1'>
+          <div className='relative overflow-hidden h-64 sm:h-80 md:h-full md:min-h-[400px]'>
             <Image
               src='/help-us-image-optimized.webp'
               alt='Un perro esperando ayuda con mirada tierna'
               width={600}
               height={400}
               className='h-full w-full object-cover transition-transform duration-700 hover:scale-110'
+              priority
             />
             <div className='absolute inset-0 bg-gradient-to-r from-slate-900/60 via-transparent to-transparent'></div>
             <div className='absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent'></div>
           </div>
         </div>
         
-        <div className='md:w-1/2 p-12 lg:p-16 space-y-8 flex flex-col justify-center animate-slide-from-right'>
-          <h3 className='text-3xl lg:text-4xl font-bold text-white leading-tight'>
+        <div className='md:w-1/2 p-6 sm:p-8 md:p-12 lg:p-16 space-y-6 sm:space-y-8 flex flex-col justify-center animate-slide-from-right order-2 md:order-2'>
+          <h3 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight'>
             Ayúdanos a hacer la{' '}
             <span className='text-gradient bg-gradient-to-r from-warm-orange to-primary bg-clip-text text-transparent'>
               diferencia
@@ -30,7 +31,7 @@ function HelpUs(): JSX.Element {
           </h3>
           
           <div className='space-y-6 text-slate-200 leading-relaxed'>
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               En nuestra protectora, cada día luchamos por dar una{' '}
               <span className='font-semibold text-warm-orange bg-warm-orange/20 px-2 py-1 rounded-md'>
                 segunda oportunidad
@@ -43,13 +44,13 @@ function HelpUs(): JSX.Element {
               .
             </p>
             
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               Tu apoyo es crucial para proporcionarles alimento, atención
               veterinaria y un hogar temporal mientras encuentran una familia para
               siempre.
             </p>
             
-            <p className='text-lg'>
+            <p className='text-base sm:text-lg'>
               Con tu donación, no solo estás ayudando a un animal necesitado, sino
               que también estás contribuyendo a mantener nuestra labor independiente
               y a crear una{' '}
