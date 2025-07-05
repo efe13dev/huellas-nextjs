@@ -2,10 +2,6 @@ import { Suspense } from "react";
 import DynamicNewsList from "@/components/DynamicNewsList";
 import { getNews } from "@/lib/actions";
 
-// Forzar renderizado dinámico - deshabilita caché estático
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Deshabilita caché de datos
-
 // Server Component para cargar las noticias iniciales
 async function NewsListLoader(): Promise<JSX.Element> {
   const initialNews = await getNews();
