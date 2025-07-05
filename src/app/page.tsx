@@ -1,12 +1,4 @@
-import { Suspense } from "react";
 import DynamicNewsList from "@/components/DynamicNewsList";
-import { getNews } from "@/lib/actions";
-
-// Server Component para cargar las noticias iniciales
-async function NewsListLoader(): Promise<JSX.Element> {
-  const initialNews = await getNews();
-  return <DynamicNewsList initialNews={initialNews} />;
-}
 
 export default function NewsPage(): JSX.Element {
   return (
@@ -22,16 +14,8 @@ export default function NewsPage(): JSX.Element {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-warm-orange mx-auto rounded-full"></div>
         </div>
-        {/* Suspense para cargar solo la lista */}
-        <Suspense
-          fallback={
-            <div className="text-center text-lg text-zinc-400">
-              Cargando noticias...
-            </div>
-          }
-        >
-          <NewsListLoader />
-        </Suspense>
+        {/* Lista dinámica de noticias */}
+        <DynamicNewsList initialNews={[]} />
       </div>
     </main>
   );

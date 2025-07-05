@@ -1,6 +1,7 @@
 // Server action para obtener noticias desde Turso
 "use server";
 import { createClient } from "@libsql/client";
+import { unstable_noStore as noStore } from "next/cache";
 import type { NewsItem } from "@/types";
 
 const client = createClient({
@@ -9,6 +10,9 @@ const client = createClient({
 });
 
 export async function getNews(): Promise<NewsItem[]> {
+  // Desactivar caché para obtener datos frescos siempre
+  noStore();
+  
   try {
     const result = await client.execute(
       "SELECT * FROM news ORDER BY date DESC"

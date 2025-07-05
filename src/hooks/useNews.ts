@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import type { NewsItem } from "@/types";
+import { getNews } from "@/lib/actions";
 
 interface UseNewsReturn {
   news: NewsItem[];
@@ -11,7 +12,7 @@ interface UseNewsReturn {
 }
 
 export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
-  const [news, setNews] = useState<NewsItem[]>(initialNews);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -21,26 +22,9 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
       setLoading(true);
       setError(null);
 
-      // Agregar timestamp para evitar caché del navegador
-      const timestamp = Date.now();
-      const response = await fetch(`/api/news?t=${timestamp}`, {
-        method: "GET",
-        headers: {
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${response.statusText}`);
-      }
-
-      const data = (await response.json()) as {
-        news: NewsItem[];
-        count: number;
-        timestamp: string;
-      };
-      setNews(data.news);
+      // Llamada directa a server action
+      const newsData = await getNews();
+      setNews(newsData);
       setLastUpdated(new Date());
     } catch (err) {
       const errorMessage =
@@ -60,10 +44,8 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
     let currentInterval = baseInterval;
     let consecutiveNoChanges = 0;
 
-    // Solo refrescar si no hay noticias iniciales (evitar fetch doble en mount)
-    if (initialNews.length === 0) {
-      void fetchNews();
-    }
+    // Siempre hacer fetch inicial para obtener datos frescos
+    void fetchNews();
 
     const startPolling = (): void => {
       if (interval !== null) clearInterval(interval);
