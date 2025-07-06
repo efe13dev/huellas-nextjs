@@ -354,7 +354,7 @@ export default function AnimatedNewsList({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-4xl max-h-[90vh] w-full"
+              className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -362,7 +362,7 @@ export default function AnimatedNewsList({
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full h-full object-contain rounded-lg"
+                className="max-w-full max-h-full object-contain rounded-lg"
               />
               <motion.button
                 whileHover={{ scale: 1.1 }}
