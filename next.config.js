@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Headers para controlar caché
+  // Headers para controlar caché de forma selectiva
   async headers() {
     return [
       {
-        // Aplicar a todas las rutas
-        source: '/(.*)',
+        // Solo aplicar anti-caché a rutas de API y datos dinámicos
+        source: '/api/(.*)',
         headers: [
           {
             key: 'Cache-Control',
@@ -18,6 +18,16 @@ const nextConfig = {
           {
             key: 'Expires',
             value: '0',
+          },
+        ],
+      },
+      {
+        // Para páginas estáticas, permitir caché pero con revalidación
+        source: '/((?!api).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
