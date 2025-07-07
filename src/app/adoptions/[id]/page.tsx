@@ -118,19 +118,25 @@ const AdoptionDetails = async ({
                   typeof adoption.photos === 'string' && adoption.photos !== ''
                     ? JSON.parse(adoption.photos)
                     : [];
+                const fallbackImg = getFallbackImage(adoption.type);
+                
                 return parsedPhotos.length > 0 ? (
                   <div className='w-full h-full'>
                     <ImageSlider
                       images={parsedPhotos}
-                      fallbackImage={getFallbackImage(adoption.type)}
+                      fallbackImage={fallbackImg}
+                      autoPlay={false}
+                      showIndicators={true}
                     />
                   </div>
                 ) : (
-                  <div className='w-full h-full'>
+                  <div className='w-full h-full flex items-center justify-center bg-gray-50'>
                     <img
-                      src={getFallbackImage(adoption.type)}
+                      src={fallbackImg}
                       alt={`Imagen de ${adoption.name}`}
-                      className='w-full h-full object-cover'
+                      className='w-full h-full object-cover rounded-lg'
+                      loading='eager'
+                      decoding='async'
                     />
                   </div>
                 );

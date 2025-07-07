@@ -27,12 +27,14 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
   const [direction, setDirection] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const goToPrevious = useCallback(() => {
     const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
     setDirection(-1);
     setCurrentIndex(newIndex);
     setImageLoaded(false);
+    setImageError(false);
   }, [currentIndex, images.length]);
 
   const goToNext = useCallback(() => {
@@ -40,6 +42,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
     setDirection(1);
     setCurrentIndex(newIndex);
     setImageLoaded(false);
+    setImageError(false);
   }, [currentIndex, images.length]);
 
   const goToSlide = useCallback(
@@ -48,6 +51,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
       setDirection(index > currentIndex ? 1 : -1);
       setCurrentIndex(index);
       setImageLoaded(false);
+      setImageError(false);
     },
     [currentIndex]
   );
@@ -64,6 +68,22 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
       clearInterval(interval);
     };
   }, [autoPlay, images.length, isHovered, goToNext, autoPlayInterval]);
+
+  // Preload first image on mount
+  useEffect(() => {
+    if (images.length > 0) {
+      const img = new Image();
+      img.onload = () => {
+        setImageLoaded(true);
+        setImageError(false);
+      };
+      img.onerror = () => {
+        setImageError(true);
+        setImageLoaded(true);
+      };
+      img.src = images[0] ?? fallbackImage;
+    }
+  }, [images, fallbackImage]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -172,59 +192,83 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
             }}
             className="h-full w-full flex items-center justify-center absolute top-0 left-0"
           >
-            <motion.img
-              src={images[currentIndex] ?? fallbackImage}
-              alt={`Slide ${currentIndex + 1}`}
-              className="max-h-full max-w-full object-contain rounded-lg shadow-lg"
-              onLoad={() => { setImageLoaded(true); }}
-              initial={{ filter: "blur(4px)" }}
-              animate={{ filter: imageLoaded ? "blur(0px)" : "blur(4px)" }}
-              transition={{ duration: 0.3 }}
-            />
+            {imageError ? (
+              <motion.div
+                className="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.img
+                  src={fallbackImage}
+                  alt={`Imagen de respaldo ${currentIndex + 1}`}
+                  className="max-h-full max-w-full object-contain rounded-lg shadow-lg"
+                  loading="eager"
+                  decoding="async"
+                />
+              </motion.div>
+            ) : (
+              <motion.img
+                src={images[currentIndex] ?? fallbackImage}
+                alt={`Slide ${currentIndex + 1}`}
+                className="max-h-full max-w-full object-contain rounded-lg shadow-lg"
+                onLoad={() => { 
+                  setImageLoaded(true);
+                  setImageError(false);
+                }}
+                onError={() => {
+                  setImageError(true);
+                  setImageLoaded(true); // Consideramos que "cargó" aunque con error
+                }}
+                initial={{ filter: "blur(4px)", opacity: 0 }}
+                animate={{ 
+                  filter: imageLoaded ? "blur(0px)" : "blur(4px)",
+                  opacity: imageLoaded ? 1 : 0.7
+                }}
+                transition={{ duration: 0.3 }}
+                loading="eager"
+                decoding="async"
+              />
+            )}
           </MotionDiv>
         </AnimatePresence>
       </div>
 
       {/* Navigation buttons */}
       {images.length > 1 && (
-        <AnimatePresence>
-          {isHovered && (
-            <>
-              <motion.button
-                variants={buttonVariants}
-                initial="initial"
-                animate="animate"
-                exit="initial"
-                whileHover="hover"
-                whileTap="tap"
-                onClick={() => { goToPrevious(); }}
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20"
-                aria-label="Imagen anterior"
-              >
-                <ChevronLeft size={20} />
-              </motion.button>
-              <motion.button
-                variants={buttonVariants}
-                initial="initial"
-                animate="animate"
-                exit="initial"
-                whileHover="hover"
-                whileTap="tap"
-                onClick={() => { goToNext(); }}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/40 backdrop-blur-sm text-white p-3 rounded-full z-10 transition-all duration-300 border border-white/20"
-                aria-label="Siguiente imagen"
-              >
-                <ChevronRight size={20} />
-              </motion.button>
-            </>
-          )}
-        </AnimatePresence>
+        <>
+          {/* Botones siempre visibles en móvil, con hover en desktop */}
+          <motion.button
+            variants={buttonVariants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            onClick={() => { goToPrevious(); }}
+            className="absolute top-1/2 left-2 sm:left-4 transform -translate-y-1/2 bg-black/50 sm:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full z-10 transition-all duration-300 border border-white/20 sm:opacity-100 md:opacity-0 md:hover:opacity-100 shadow-lg"
+            aria-label="Imagen anterior"
+          >
+            <ChevronLeft size={16} className="sm:w-5 sm:h-5" />
+          </motion.button>
+          <motion.button
+            variants={buttonVariants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            onClick={() => { goToNext(); }}
+            className="absolute top-1/2 right-2 sm:right-4 transform -translate-y-1/2 bg-black/50 sm:bg-black/40 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full z-10 transition-all duration-300 border border-white/20 sm:opacity-100 md:opacity-0 md:hover:opacity-100 shadow-lg"
+            aria-label="Siguiente imagen"
+          >
+            <ChevronRight size={16} className="sm:w-5 sm:h-5" />
+          </motion.button>
+        </>
       )}
 
       {/* Indicators */}
       {images.length > 1 && showIndicators && (
         <motion.div
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10"
+          className="absolute bottom-3 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -237,7 +281,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
               whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => { goToSlide(index); }}
-              className="w-2 h-2 rounded-full backdrop-blur-sm border border-white/30 transition-all duration-300"
+              className="w-3 h-3 sm:w-2 sm:h-2 rounded-full backdrop-blur-sm border border-white/40 transition-all duration-300 shadow-lg"
               aria-label={`Ir a imagen ${index + 1}`}
             />
           ))}
