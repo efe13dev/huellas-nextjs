@@ -4,6 +4,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { formatDate } from "@/lib/utils";
 
+// Función para formatear el contenido separando párrafos con líneas en blanco
+const formatNewsContent = (content: string): JSX.Element => {
+  // Dividir por puntos seguidos de espacio y agregar doble salto de línea
+  const paragraphs = content
+    .split(/\. /)
+    .map(sentence => sentence.trim())
+    .filter(sentence => sentence.length > 0)
+    .map((sentence, index, array) => {
+      // Agregar el punto de vuelta excepto en la última oración si ya lo tiene
+      const needsPeriod = !sentence.endsWith('.') && !sentence.endsWith('!') && !sentence.endsWith('?');
+      return needsPeriod && index < array.length - 1 ? sentence + '.' : sentence;
+    });
+
+  return (
+    <div className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-4">
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className="mb-4 last:mb-0">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+  );
+};
+
 // Icono elegante para el botón (chevron up)
 const ChevronUpIcon = (): JSX.Element => (
   <svg
@@ -243,7 +267,13 @@ export default function AnimatedNewsList({
                           className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed${expanded ? "" : " line-clamp-3 pb-2"}`}
                           style={{ margin: 0 }}
                         >
-                          {item.content}
+                          {expanded ? (
+                            formatNewsContent(item.content)
+                          ) : (
+                            item.content.length > 200
+                              ? `${item.content.substring(0, 200)}...`
+                              : item.content
+                          )}
                         </p>
                       </motion.div>
 
