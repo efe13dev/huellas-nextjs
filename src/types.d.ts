@@ -25,4 +25,5 @@ export interface NewsItem {
   date: string;
   image?: string;
   content: string;
+  type?: string; // Tipo de noticia: 'Noticia', 'Urgente', 'Perdido', etc.
 }

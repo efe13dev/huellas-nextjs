@@ -27,6 +27,10 @@ export async function getNews(): Promise<NewsItem[]> {
         row.image !== null && row.image !== undefined
           ? String(row.image)
           : undefined,
+      type:
+        row.type !== null && row.type !== undefined
+          ? String(row.type)
+          : undefined,
     }));
 
     return newsItems;

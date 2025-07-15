@@ -27,6 +27,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "next.config.mjs",
+    "tailwind.config.ts",
     "src/**/*.ts",
     "src/**/*.tsx"
   ],

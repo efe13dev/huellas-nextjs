@@ -3,18 +3,24 @@ import type { NewsItem } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { formatDate } from "@/lib/utils";
+import NewsTypeTag from "@/components/NewsTypeTag";
 
 // Función para formatear el contenido separando párrafos con líneas en blanco
 const formatNewsContent = (content: string): JSX.Element => {
   // Dividir por puntos seguidos de espacio y agregar doble salto de línea
   const paragraphs = content
     .split(/\. /)
-    .map(sentence => sentence.trim())
-    .filter(sentence => sentence.length > 0)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length > 0)
     .map((sentence, index, array) => {
       // Agregar el punto de vuelta excepto en la última oración si ya lo tiene
-      const needsPeriod = !sentence.endsWith('.') && !sentence.endsWith('!') && !sentence.endsWith('?');
-      return needsPeriod && index < array.length - 1 ? sentence + '.' : sentence;
+      const needsPeriod =
+        !sentence.endsWith(".") &&
+        !sentence.endsWith("!") &&
+        !sentence.endsWith("?");
+      return needsPeriod && index < array.length - 1
+        ? sentence + "."
+        : sentence;
     });
 
   return (
@@ -172,8 +178,15 @@ export default function AnimatedNewsList({
                         }
                       : {}
                   }
-                  className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl"
+                  className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl relative"
                 >
+                  {/* Tipo de noticia - Esquina superior derecha */}
+                  {item.type != null && item.type.trim() !== "" && (
+                    <div className="absolute -top-2 -right-10 z-10">
+                      <NewsTypeTag type={item.type} />
+                    </div>
+                  )}
+
                   <div className="flex flex-col gap-4 sm:gap-6 md:flex-row">
                     {/* Imagen */}
                     <div className="w-full md:w-1/3 flex-shrink-0">
@@ -267,13 +280,11 @@ export default function AnimatedNewsList({
                           className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed${expanded ? "" : " line-clamp-3 pb-2"}`}
                           style={{ margin: 0 }}
                         >
-                          {expanded ? (
-                            formatNewsContent(item.content)
-                          ) : (
-                            item.content.length > 200
+                          {expanded
+                            ? formatNewsContent(item.content)
+                            : item.content.length > 200
                               ? `${item.content.substring(0, 200)}...`
-                              : item.content
-                          )}
+                              : item.content}
                         </p>
                       </motion.div>
 
