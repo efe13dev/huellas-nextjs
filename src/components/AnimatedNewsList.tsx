@@ -182,7 +182,7 @@ export default function AnimatedNewsList({
                 >
                   {/* Tipo de noticia - Esquina superior derecha */}
                   {item.type != null && item.type.trim() !== "" && (
-                    <div className="absolute -top-2 -right-10 z-10">
+                    <div className="absolute -top-2 -right-2 sm:-right-6 md:-right-10 z-10">
                       <NewsTypeTag type={item.type} />
                     </div>
                   )}

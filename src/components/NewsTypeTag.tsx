@@ -83,14 +83,13 @@ const NewsTypeTag: React.FC<NewsTypeTagProps> = ({ type }) => {
   return (
     <div
       className={`
-      inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
-      ${styles.bg} ${styles.text} ${styles.border} border
-      shadow-lg ${styles.shadow}
-      backdrop-blur-sm
-      transform transition-all duration-200 hover:scale-105
-      animate-pulse-subtle
-      rotate-12
-    `}
+        inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+        ${styles.bg} ${styles.text} ${styles.border} border
+        shadow-lg ${styles.shadow}
+        backdrop-blur-sm
+        transform transition-all duration-200 hover:scale-105
+        rotate-6
+      `}
     >
       <span className="text-sm" role="img" aria-label={`Icono ${type}`}>
         {styles.icon}
