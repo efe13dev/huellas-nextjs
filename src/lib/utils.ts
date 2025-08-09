@@ -74,6 +74,7 @@ export const getFallbackImage = (type: string): string => {
 // Función auxiliar para formatear la fecha
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
+
   return date.toLocaleDateString("es-ES", {
     day: "numeric",
     month: "long",

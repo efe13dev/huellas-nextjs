@@ -28,7 +28,9 @@ function Header(): JSX.Element {
       setTimeout(() => {
         setAnimatedTitle((prev) => {
           const newArray = [...prev];
+
           newArray[index] = letter;
+
           return newArray;
         });
       }, delay);
@@ -44,7 +46,9 @@ function Header(): JSX.Element {
       setTimeout(() => {
         setAnimatedSubtitle((prev) => {
           const newArray = [...prev];
+
           newArray[index] = letter;
+
           return newArray;
         });
       }, delay);
@@ -52,8 +56,7 @@ function Header(): JSX.Element {
 
     // Animar logo después de que termine todo el texto
     const subtitleAnimationDuration = subtitleLetters.length * 20;
-    const totalTextAnimationDuration =
-      titleAnimationDuration + 100 + subtitleAnimationDuration;
+    const totalTextAnimationDuration = titleAnimationDuration + 100 + subtitleAnimationDuration;
 
     setTimeout(() => {
       setShowLogo(true);
@@ -61,16 +64,16 @@ function Header(): JSX.Element {
   }, []);
 
   return (
-    <header className="relative bg-gradient-to-r from-white via-primary/5 to-white border-b border-border/30 shadow-sm">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-primary/3 opacity-50"></div>
-      <div className="relative container mx-auto px-6 py-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+    <header className="relative border-b border-border/30 bg-gradient-to-r from-white via-primary/5 to-white shadow-sm">
+      <div className="from-primary/3 to-primary/3 absolute inset-0 bg-gradient-to-r via-transparent opacity-50"></div>
+      <div className="container relative mx-auto px-6 py-6">
+        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-4">
             <div
               className={`relative transition-all duration-500 ease-out ${
                 showLogo
-                  ? "opacity-100 blur-0 transform translate-y-0"
-                  : "opacity-0 blur-md transform translate-y-8"
+                  ? "translate-y-0 transform opacity-100 blur-0"
+                  : "translate-y-8 transform opacity-0 blur-md"
               }`}
             >
               <Link href="/" aria-label="Ir a inicio">
@@ -91,14 +94,14 @@ function Header(): JSX.Element {
               </Link>
             </div>
             <div className="text-center md:text-left">
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground h-8 flex items-center">
+              <h1 className="flex h-8 items-center text-2xl font-bold text-foreground md:text-3xl">
                 {titleText.split("").map((letter, index) => (
                   <span
                     key={index}
                     className={`inline-block transition-all duration-300 ease-out ${
                       animatedTitle[index] !== undefined
-                        ? "opacity-100 blur-0 transform translate-x-0"
-                        : "opacity-0 blur-md transform translate-x-8"
+                        ? "translate-x-0 transform opacity-100 blur-0"
+                        : "translate-x-8 transform opacity-0 blur-md"
                     } ${letter === "H" ? "text-primary" : ""}`}
                     style={{
                       transitionDelay: `${index * 12}ms`,
@@ -108,14 +111,14 @@ function Header(): JSX.Element {
                   </span>
                 ))}
               </h1>
-              <p className="text-sm text-muted-foreground font-medium h-6 flex items-center">
+              <p className="flex h-6 items-center text-sm font-medium text-muted-foreground">
                 {subtitleText.split("").map((letter, index) => (
                   <span
                     key={index}
                     className={`inline-block transition-all duration-300 ease-out ${
                       animatedSubtitle[index] !== undefined
-                        ? "opacity-100 blur-0 transform translate-x-0"
-                        : "opacity-0 blur-md transform translate-x-6"
+                        ? "translate-x-0 transform opacity-100 blur-0"
+                        : "translate-x-6 transform opacity-0 blur-md"
                     }`}
                     style={{
                       transitionDelay: `${titleText.length * 12 + 50 + index * 10}ms`,
@@ -131,34 +134,30 @@ function Header(): JSX.Element {
           <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
+              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               Noticias
             </Link>
             <Link
               href="/adoptions"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
+              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               Adopciones
             </Link>
             <Link
               href="/about"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-medium"
+              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
             >
               Quiénes somos
             </Link>
             <Link
               href="#"
-              className="group relative inline-flex items-center justify-center overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover-lift shadow-lg hover:shadow-xl"
+              className="hover-lift group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-xl"
               target="_blank"
               rel="noopener noreferrer"
             >
               <span className="relative z-10 flex items-center gap-2">
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"

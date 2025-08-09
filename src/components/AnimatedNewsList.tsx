@@ -1,7 +1,9 @@
 "use client";
-import type { NewsItem } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+
+import type { NewsItem } from "@/types";
+
 import { formatDate } from "@/lib/utils";
 import NewsTypeTag from "@/components/NewsTypeTag";
 
@@ -15,16 +17,13 @@ const formatNewsContent = (content: string): JSX.Element => {
     .map((sentence, index, array) => {
       // Agregar el punto de vuelta excepto en la última oración si ya lo tiene
       const needsPeriod =
-        !sentence.endsWith(".") &&
-        !sentence.endsWith("!") &&
-        !sentence.endsWith("?");
-      return needsPeriod && index < array.length - 1
-        ? sentence + "."
-        : sentence;
+        !sentence.endsWith(".") && !sentence.endsWith("!") && !sentence.endsWith("?");
+
+      return needsPeriod && index < array.length - 1 ? sentence + "." : sentence;
     });
 
   return (
-    <div className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-4">
+    <div className="space-y-4 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-base">
       {paragraphs.map((paragraph, index) => (
         <p key={index} className="mb-4 last:mb-0">
           {paragraph}
@@ -37,7 +36,7 @@ const formatNewsContent = (content: string): JSX.Element => {
 // Icono elegante para el botón (chevron up)
 const ChevronUpIcon = (): JSX.Element => (
   <svg
-    className="w-5 h-5 sm:w-6 sm:h-6"
+    className="h-5 w-5 sm:h-6 sm:w-6"
     fill="none"
     stroke="currentColor"
     strokeWidth={2}
@@ -47,15 +46,9 @@ const ChevronUpIcon = (): JSX.Element => (
   </svg>
 );
 
-export default function AnimatedNewsList({
-  news,
-}: {
-  news: NewsItem[];
-}): JSX.Element {
+export default function AnimatedNewsList({ news }: { news: NewsItem[] }): JSX.Element {
   // Estado para alturas medidas de cada noticia
-  const [measuredHeights, setMeasuredHeights] = useState<
-    Record<string, number>
-  >({});
+  const [measuredHeights, setMeasuredHeights] = useState<Record<string, number>>({});
   // Estados para scroll infinito
   const INITIAL_COUNT = 5;
   const LOAD_MORE_COUNT = 5;
@@ -76,7 +69,9 @@ export default function AnimatedNewsList({
     const handleScroll = (): void => {
       setShowScrollTop(window.scrollY > 300);
     };
+
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -90,11 +85,13 @@ export default function AnimatedNewsList({
   const toggleExpanded = (itemId: string): void => {
     setExpandedItems((prev) => {
       const newSet = new Set(prev);
+
       if (newSet.has(itemId)) {
         newSet.delete(itemId);
       } else {
         newSet.add(itemId);
       }
+
       return newSet;
     });
   };
@@ -118,6 +115,7 @@ export default function AnimatedNewsList({
     };
 
     document.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -133,7 +131,7 @@ export default function AnimatedNewsList({
 
   return (
     <>
-      <div className="flex flex-col gap-4 sm:gap-8 pb-6 sm:pb-8">
+      <div className="flex flex-col gap-4 pb-6 sm:gap-8 sm:pb-8">
         <AnimatePresence>
           <motion.div
             key="news-container"
@@ -148,8 +146,7 @@ export default function AnimatedNewsList({
               const isLongContent = item.content.length > 175;
               // Animar elementos nuevos (últimos cargados) o si es la carga inicial
               const shouldAnimate =
-                visibleCount <= INITIAL_COUNT ||
-                idx >= visibleCount - LOAD_MORE_COUNT;
+                visibleCount <= INITIAL_COUNT || idx >= visibleCount - LOAD_MORE_COUNT;
 
               return (
                 <motion.article
@@ -178,24 +175,25 @@ export default function AnimatedNewsList({
                         }
                       : {}
                   }
-                  className="rounded-xl sm:rounded-2xl bg-white/60 dark:bg-zinc-900/60 shadow-xl backdrop-blur border border-white/20 dark:border-zinc-700/40 p-4 sm:p-6 transition-all duration-300 hover:shadow-2xl relative"
+                  className="relative rounded-xl border border-white/20 bg-white/60 p-4 shadow-xl backdrop-blur transition-all duration-300 hover:shadow-2xl dark:border-zinc-700/40 dark:bg-zinc-900/60 sm:rounded-2xl sm:p-6"
                 >
                   {/* Tipo de noticia - Esquina superior derecha */}
                   {item.type != null && item.type.trim() !== "" && (
-                    <div className="absolute -top-2 -right-2 sm:-right-6 md:-right-10 z-10">
+                    <div className="absolute -right-2 -top-2 z-10 sm:-right-6 md:-right-10">
                       <NewsTypeTag type={item.type} />
                     </div>
                   )}
 
                   <div className="flex flex-col gap-4 sm:gap-6 md:flex-row">
                     {/* Imagen */}
-                    <div className="w-full md:w-1/3 flex-shrink-0">
+                    <div className="w-full flex-shrink-0 md:w-1/3">
                       <motion.div
-                        className="aspect-[16/9] sm:aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-zinc-200 dark:bg-zinc-800 border border-white/10 cursor-pointer group relative"
+                        className="group relative aspect-[16/9] cursor-pointer overflow-hidden rounded-lg border border-white/10 bg-zinc-200 dark:bg-zinc-800 sm:aspect-[4/3] sm:rounded-xl"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => {
                           const imageUrl = item.image ?? "";
+
                           if (imageUrl.trim() !== "") {
                             openImageModal(imageUrl, item.title);
                           }
@@ -204,17 +202,17 @@ export default function AnimatedNewsList({
                         <img
                           src={item.image}
                           alt={item.title}
-                          className="object-cover w-full h-full transition-transform duration-300"
+                          className="h-full w-full object-cover transition-transform duration-300"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                           <motion.div
                             initial={{ scale: 0.8, opacity: 0 }}
                             whileHover={{ scale: 1, opacity: 1 }}
-                            className="bg-white/90 dark:bg-zinc-800/90 rounded-full p-2 sm:p-3 backdrop-blur-sm"
+                            className="rounded-full bg-white/90 p-2 backdrop-blur-sm dark:bg-zinc-800/90 sm:p-3"
                           >
                             <svg
-                              className="w-4 h-4 sm:w-6 sm:h-6 text-zinc-700 dark:text-zinc-300"
+                              className="h-4 w-4 text-zinc-700 dark:text-zinc-300 sm:h-6 sm:w-6"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -232,12 +230,12 @@ export default function AnimatedNewsList({
                     </div>
 
                     {/* Contenido */}
-                    <div className="flex-1 flex flex-col gap-2 justify-center">
-                      <h2 className="text-lg sm:text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-1 sm:mb-2 transition-all duration-300 line-clamp-2">
+                    <div className="flex flex-1 flex-col justify-center gap-2">
+                      <h2 className="mb-1 line-clamp-2 text-lg font-semibold text-zinc-900 transition-all duration-300 dark:text-zinc-100 sm:mb-2 sm:text-2xl">
                         {item.title}
                       </h2>
 
-                      <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mb-2 sm:mb-4">
+                      <p className="mb-2 text-xs text-zinc-500 dark:text-zinc-400 sm:mb-4 sm:text-sm">
                         {formatDate(item.date)}
                       </p>
 
@@ -268,6 +266,7 @@ export default function AnimatedNewsList({
                             if (el != null && expanded) {
                               setTimeout(() => {
                                 const height = el.scrollHeight;
+
                                 if (!isNaN(height)) {
                                   setMeasuredHeights((prev) => ({
                                     ...prev,
@@ -277,7 +276,7 @@ export default function AnimatedNewsList({
                               }, 10);
                             }
                           }}
-                          className={`text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed${expanded ? "" : " line-clamp-3 pb-2"}`}
+                          className={`text-sm text-zinc-700 dark:text-zinc-300 sm:text-base leading-relaxed${expanded ? "" : "line-clamp-3 pb-2"}`}
                           style={{ margin: 0 }}
                         >
                           {expanded
@@ -295,13 +294,13 @@ export default function AnimatedNewsList({
                           onClick={() => {
                             toggleExpanded(item.id.toString());
                           }}
-                          className="flex items-center gap-1 self-start mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                          className="mt-2 flex items-center gap-1 self-start text-xs font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 sm:mt-3 sm:text-sm"
                         >
                           <span>{expanded ? "Leer menos" : "Leer más"}</span>
                           <motion.svg
                             animate={{ rotate: expanded ? 180 : 0 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
-                            className="w-3 h-3 sm:w-4 sm:h-4"
+                            className="h-3 w-3 sm:h-4 sm:w-4"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -329,13 +328,13 @@ export default function AnimatedNewsList({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
-            className="flex justify-center mt-8 sm:mt-12 mb-12 sm:mb-16"
+            className="mb-12 mt-8 flex justify-center sm:mb-16 sm:mt-12"
           >
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleLoadMore}
-              className="flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 bg-white/60 dark:bg-zinc-900/60 backdrop-blur border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-white/80 dark:hover:bg-zinc-900/80 transition-all duration-300"
+              className="flex items-center gap-2 rounded-lg border border-blue-200 bg-white/60 px-4 py-2 text-sm font-medium text-blue-600 backdrop-blur transition-all duration-300 hover:bg-white/80 hover:text-blue-700 dark:border-blue-800 dark:bg-zinc-900/60 dark:text-blue-400 dark:hover:bg-zinc-900/80 dark:hover:text-blue-300 sm:px-6 sm:py-3 sm:text-base"
             >
               <span>Cargar más noticias</span>
               <motion.svg
@@ -345,7 +344,7 @@ export default function AnimatedNewsList({
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="w-4 h-4"
+                className="h-4 w-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -372,7 +371,7 @@ export default function AnimatedNewsList({
               transition={{ duration: 0.4, ease: "easeInOut" }}
               aria-label="Volver arriba"
               onClick={handleScrollToTop}
-              className="fixed z-40 bottom-6 right-6 sm:bottom-8 sm:right-8 p-3 sm:p-4 rounded-full bg-white/80 dark:bg-zinc-900/80 shadow-xl border border-white/30 dark:border-zinc-700/40 backdrop-blur hover:bg-white dark:hover:bg-zinc-900 transition-all duration-300 flex items-center justify-center group"
+              className="group fixed bottom-6 right-6 z-40 flex items-center justify-center rounded-full border border-white/30 bg-white/80 p-3 shadow-xl backdrop-blur transition-all duration-300 hover:bg-white dark:border-zinc-700/40 dark:bg-zinc-900/80 dark:hover:bg-zinc-900 sm:bottom-8 sm:right-8 sm:p-4"
             >
               <ChevronUpIcon />
             </motion.button>
@@ -387,7 +386,7 @@ export default function AnimatedNewsList({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
             onClick={closeImageModal}
           >
             <motion.div
@@ -395,7 +394,7 @@ export default function AnimatedNewsList({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
+              className="relative flex max-h-[90vh] w-full max-w-4xl items-center justify-center"
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -403,20 +402,15 @@ export default function AnimatedNewsList({
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="max-w-full max-h-full object-contain rounded-lg"
+                className="max-h-full max-w-full rounded-lg object-contain"
               />
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={closeImageModal}
-                className="absolute top-4 right-4 bg-white/90 dark:bg-zinc-800/90 text-zinc-700 dark:text-zinc-300 rounded-full p-2 backdrop-blur-sm"
+                className="absolute right-4 top-4 rounded-full bg-white/90 p-2 text-zinc-700 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-300"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

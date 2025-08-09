@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import "@fontsource-variable/onest";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -8,8 +9,7 @@ export const metadata: Metadata = {
   title: "Protectora Huellas",
   description:
     "Protectora de animales Huellas en Murcia. Adopción, voluntariado y cuidado de mascotas abandonadas.",
-  keywords:
-    "protectora de animales, adopción, Murcia, perros, gatos, mascotas, refugio",
+  keywords: "protectora de animales, adopción, Murcia, perros, gatos, mascotas, refugio",
   authors: [
     {
       name: "Protectora Huellas",
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>): React.JSX.Element {
   return (
     <html lang="es">
-      <body className="flex flex-col min-h-screen ">
+      <body className="flex min-h-screen flex-col">
         <Header />
         {children}
         <Footer />

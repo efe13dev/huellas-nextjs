@@ -7,8 +7,9 @@ const client = createClient({
 
 export async function getAdoptions(): Promise<any> {
   const availableAdoptions = await client.execute(
-    "SELECT * FROM animals WHERE adopted = 0 ORDER BY register_date DESC"
+    "SELECT * FROM animals WHERE adopted = 0 ORDER BY register_date DESC",
   );
+
   return availableAdoptions;
 }
 
@@ -17,5 +18,6 @@ export async function getOneAdoption(id: string): Promise<any> {
     sql: "SELECT * FROM animals WHERE id = ?",
     args: [id],
   });
+
   return adoption;
 }

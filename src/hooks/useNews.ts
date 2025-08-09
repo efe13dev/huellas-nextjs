@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+
 import type { NewsItem } from "@/types";
 // import { getNews } from "@/lib/actions";
 
@@ -30,25 +31,21 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
           content:
             "Un perro mestizo fue encontrado con heridas graves en la zona norte de la ciudad. Necesita cirugía urgente para salvar su vida. Los veterinarios estiman que el costo será de 800€. Cualquier donación es bienvenida para ayudar a este pequeño luchador.",
           date: "2024-01-15T10:30:00Z",
-          image:
-            "https://images.unsplash.com/photo-1551717743-49959800b1f6?w=800&h=600&fit=crop",
+          image: "https://images.unsplash.com/photo-1551717743-49959800b1f6?w=800&h=600&fit=crop",
           type: "Urgente",
         },
         {
           id: "sample-perdido",
-          title:
-            "Se busca: Luna, Golden Retriever perdida en el parque central",
+          title: "Se busca: Luna, Golden Retriever perdida en el parque central",
           content:
             "Luna es una Golden Retriever de 3 años que se perdió el pasado sábado en el parque central. Lleva collar azul con su nombre y número de teléfono. Es muy cariñosa y responde a su nombre. Si la has visto, por favor contacta inmediatamente.",
           date: "2024-01-14T16:45:00Z",
-          image:
-            "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=600&fit=crop",
+          image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=600&fit=crop",
           type: "Perdido",
         },
         {
           id: "sample-encontrado",
-          title:
-            "¡Buenas noticias! Max ha sido encontrado y reunido con su familia",
+          title: "¡Buenas noticias! Max ha sido encontrado y reunido con su familia",
           content:
             "Después de 5 días de búsqueda intensiva, Max, el pastor alemán que se había perdido, fue encontrado sano y salvo. Una familia lo encontró refugiándose bajo un puente y reconoció las fotos que habíamos compartido.",
           date: "2024-01-13T14:20:00Z",
@@ -78,8 +75,7 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
         },
         {
           id: "sample-salud",
-          title:
-            "Campaña de vacunación gratuita para mascotas de bajos recursos",
+          title: "Campaña de vacunación gratuita para mascotas de bajos recursos",
           content:
             "En colaboración con la clínica veterinaria municipal, ofrecemos vacunación gratuita para mascotas de familias con recursos limitados. La campaña incluye vacunas básicas, desparasitación y revisión general.",
           date: "2024-01-10T13:30:00Z",
@@ -103,10 +99,10 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
       setNews(sampleNews);
       setLastUpdated(new Date());
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Error desconocido";
+      const errorMessage = err instanceof Error ? err.message : "Error desconocido";
+
       setError(errorMessage);
-      // eslint-disable-next-line no-console
+
       console.error("[useNews] Error fetching news:", err);
     } finally {
       setLoading(false);
@@ -130,6 +126,7 @@ export function useNews(initialNews: NewsItem[] = []): UseNewsReturn {
         // Solo hacer petición si la pestaña está visible y hay conexión
         if (!document.hidden && navigator.onLine) {
           const previousCount = news.length;
+
           void fetchNews()
             .then(() => {
               // Polling adaptativo: si no hay cambios, reducir frecuencia

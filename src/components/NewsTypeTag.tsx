@@ -7,7 +7,7 @@ interface NewsTypeTagProps {
 const NewsTypeTag: React.FC<NewsTypeTagProps> = ({ type }) => {
   // Configuración de estilos para cada tipo de noticia
   const getTypeStyles = (
-    newsType: string
+    newsType: string,
   ): {
     bg: string;
     text: string;
@@ -82,14 +82,7 @@ const NewsTypeTag: React.FC<NewsTypeTagProps> = ({ type }) => {
 
   return (
     <div
-      className={`
-        inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
-        ${styles.bg} ${styles.text} ${styles.border} border
-        shadow-lg ${styles.shadow}
-        backdrop-blur-sm
-        transform transition-all duration-200 hover:scale-105
-        rotate-6
-      `}
+      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${styles.bg} ${styles.text} ${styles.border} border shadow-lg ${styles.shadow} rotate-6 transform backdrop-blur-sm transition-all duration-200 hover:scale-105`}
     >
       <span className="text-sm" role="img" aria-label={`Icono ${type}`}>
         {styles.icon}

@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
+import { google } from "googleapis";
+import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 const OAuth2 = google.auth.OAuth2;
 
@@ -8,20 +8,20 @@ const createTransporter = async (): Promise<nodemailer.Transporter> => {
   const oauth2Client = new OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    'https://developers.google.com/oauthplayground'
+    "https://developers.google.com/oauthplayground",
   );
 
   oauth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   });
 
   const accessToken = await oauth2Client
     .getAccessToken()
     .then((tokenResponse) => {
-      if (typeof tokenResponse?.token === 'string') {
+      if (typeof tokenResponse?.token === "string") {
         return tokenResponse.token;
       } else {
-        throw new Error('No se recibió token de acceso válido');
+        throw new Error("No se recibió token de acceso válido");
       }
     })
     .catch((error) => {
@@ -29,15 +29,15 @@ const createTransporter = async (): Promise<nodemailer.Transporter> => {
     });
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      type: 'OAuth2',
+      type: "OAuth2",
       user: process.env.EMAIL_USER,
       accessToken,
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      refreshToken: process.env.GOOGLE_REFRESH_TOKEN
-    }
+      refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    },
   });
 
   return transporter;
@@ -63,19 +63,13 @@ export async function POST(request: Request): Promise<NextResponse> {
         <p><strong>Asunto:</strong> ${asunto}</p>
         <h3>Mensaje:</h3>
         <p>${mensaje}</p>
-      `
+      `,
     });
 
-    return NextResponse.json(
-      { message: 'Correo enviado con éxito' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Correo enviado con éxito" }, { status: 200 });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error al enviar el correo:', error);
-    return NextResponse.json(
-      { error: 'Error al enviar el correo' },
-      { status: 500 }
-    );
+    console.error("Error al enviar el correo:", error);
+
+    return NextResponse.json({ error: "Error al enviar el correo" }, { status: 500 });
   }
 }
