@@ -1,25 +1,25 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 function Contact(): React.JSX.Element {
   const searchParams = useSearchParams();
@@ -82,21 +82,26 @@ function Contact(): React.JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-primary/5 to-soft-blue/10">
-      <div className="container mx-auto px-6 py-8 md:py-12">
-        <div className="mb-16 space-y-6 text-center">
-          <h1 className="text-gradient bg-gradient-to-r from-primary via-soft-blue to-warm-orange bg-clip-text text-4xl font-bold text-transparent md:text-6xl">
-            Contacto
+    <div className="section-decorated min-h-screen bg-gradient-to-b from-cream/40 via-background to-background">
+      <div className="container relative mx-auto px-4 py-12 sm:px-6 md:py-16">
+        <div className="mb-12 space-y-4 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Escríbenos
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            Ponte en <span className="text-gradient">contacto</span>
           </h1>
-          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground">
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
             ¿Tienes alguna pregunta o quieres adoptar uno de nuestros animales? Estamos aquí para
-            ayudarte. Envíanos un mensaje y te responderemos lo antes posible.
+            ayudarte.
           </p>
-          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-primary to-warm-orange"></div>
         </div>
 
         <div className="mx-auto max-w-2xl">
-          <div className="animate-slide-in rounded-2xl border border-border/50 bg-card/80 p-8 shadow-2xl backdrop-blur-sm md:p-12">
+          <div className="card-gradient-border animate-slide-in rounded-2xl bg-background/90 p-6 shadow-xl backdrop-blur-sm sm:p-8 md:p-12">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-3">
@@ -167,7 +172,7 @@ function Contact(): React.JSX.Element {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="hover-lift h-14 w-full rounded-xl bg-gradient-to-r from-primary to-soft-blue text-lg font-semibold text-white shadow-xl transition-all duration-300 hover:from-soft-blue hover:to-primary hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-50"
+                  className="hover-lift h-14 w-full rounded-xl bg-gradient-to-r from-primary to-warm-orange text-lg font-semibold text-white shadow-xl shadow-primary/20 transition-all duration-300 hover:shadow-2xl hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isLoading ? (
                     <span className="flex items-center gap-3">

@@ -1,15 +1,38 @@
 "use client";
-import React, { type JSX, useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { type JSX, useEffect, useState } from "react";
 
 function Header(): JSX.Element {
+  const pathname = usePathname();
   const [animatedTitle, setAnimatedTitle] = useState<string[]>([]);
   const [animatedSubtitle, setAnimatedSubtitle] = useState<string[]>([]);
   const [showLogo, setShowLogo] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const titleText = "Protectora Huellas";
   const subtitleText = "Creando hogares con amor";
+
+  const navLinks = [
+    { href: "/", label: "Noticias" },
+    { href: "/adoptions", label: "Adopciones" },
+    { href: "/about", label: "Quiénes somos" },
+    { href: "/contact", label: "Contacto" },
+  ];
+
+  useEffect(() => {
+    const handleScroll = (): void => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     // Animar título primero
@@ -21,9 +44,9 @@ function Header(): JSX.Element {
     setAnimatedSubtitle([]);
     setShowLogo(false);
 
-    // Animar cada letra del título con retraso, empezando desde la izquierda (P primero)
+    // Animar cada letra del título con retraso
     titleLetters.forEach((letter, index) => {
-      const delay = index * 12; // Muy rápido: 12ms entre letras del título
+      const delay = index * 12;
 
       setTimeout(() => {
         setAnimatedTitle((prev) => {
@@ -38,10 +61,10 @@ function Header(): JSX.Element {
 
     // Animar subtítulo después del título
     const subtitleLetters = subtitleText.split("");
-    const titleAnimationDuration = titleTotalLetters * 20; // ~216ms para el título
+    const titleAnimationDuration = titleTotalLetters * 20;
 
     subtitleLetters.forEach((letter, index) => {
-      const delay = titleAnimationDuration + 100 + index * 20; // Pausa de 50ms, luego 10ms entre letras del subtítulo
+      const delay = titleAnimationDuration + 100 + index * 20;
 
       setTimeout(() => {
         setAnimatedSubtitle((prev) => {
@@ -56,19 +79,26 @@ function Header(): JSX.Element {
 
     // Animar logo después de que termine todo el texto
     const subtitleAnimationDuration = subtitleLetters.length * 20;
-    const totalTextAnimationDuration = titleAnimationDuration + 100 + subtitleAnimationDuration;
+    const totalTextAnimationDuration =
+      titleAnimationDuration + 100 + subtitleAnimationDuration;
 
     setTimeout(() => {
       setShowLogo(true);
-    }, totalTextAnimationDuration + 1500); // 150ms de pausa adicional
+    }, totalTextAnimationDuration + 1500);
   }, []);
 
   return (
-    <header className="relative border-b border-border/30 bg-gradient-to-r from-white via-primary/5 to-white shadow-sm">
-      <div className="from-primary/3 to-primary/3 absolute inset-0 bg-gradient-to-r via-transparent opacity-50"></div>
-      <div className="container relative mx-auto px-6 py-6">
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-4">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-border/40 bg-background/80 shadow-lg shadow-primary/5 backdrop-blur-xl"
+          : "border-b border-border/20 bg-background/60 backdrop-blur-md"
+      }`}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-warm-orange/3"></div>
+      <div className="container relative mx-auto px-4 py-4 sm:px-6">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
             <div
               className={`relative transition-all duration-500 ease-out ${
                 showLogo
@@ -85,16 +115,16 @@ function Header(): JSX.Element {
                   <Image
                     src="/logo-huellas-opt.png"
                     alt="Logo de Protectora Huellas"
-                    width={65}
-                    height={65}
-                    className="-rotate-12 cursor-pointer transition-transform duration-200 hover:scale-105"
+                    width={52}
+                    height={52}
+                    className="-rotate-12 cursor-pointer transition-transform duration-200 hover:scale-110"
                     priority
                   />
                 </motion.div>
               </Link>
             </div>
-            <div className="text-center md:text-left">
-              <h1 className="flex h-8 items-center text-2xl font-bold text-foreground md:text-3xl">
+            <div className="text-left">
+              <h1 className="flex h-7 items-center text-xl font-bold text-foreground sm:h-8 sm:text-2xl md:text-3xl">
                 {titleText.split("").map((letter, index) => (
                   <span
                     key={index}
@@ -111,7 +141,7 @@ function Header(): JSX.Element {
                   </span>
                 ))}
               </h1>
-              <p className="flex h-6 items-center text-sm font-medium text-muted-foreground">
+              <p className="hidden h-5 items-center text-xs font-medium text-muted-foreground sm:flex sm:text-sm">
                 {subtitleText.split("").map((letter, index) => (
                   <span
                     key={index}
@@ -131,44 +161,132 @@ function Header(): JSX.Element {
             </div>
           </div>
 
-          <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-            <Link
-              href="/"
-              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
-            >
-              Noticias
-            </Link>
-            <Link
-              href="/adoptions"
-              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
-            >
-              Adopciones
-            </Link>
-            <Link
-              href="/about"
-              className="font-medium text-muted-foreground transition-colors duration-300 hover:text-foreground"
-            >
-              Quiénes somos
-            </Link>
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-1 md:flex">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
+                  }`}
+                >
+                  {link.label}
+                  {isActive ? (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-primary"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
+                    />
+                  ) : null}
+                </Link>
+              );
+            })}
             <Link
               href="#"
-              className="hover-lift group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-xl"
+              className="ml-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-warm-orange px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:brightness-110"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Donar
-              </span>
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Donar
             </Link>
           </nav>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
+            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-primary/10 md:hidden"
+            aria-label="Menú de navegación"
+          >
+            <div className="flex w-5 flex-col gap-1.5">
+              <span
+                className={`h-0.5 w-full rounded-full bg-foreground transition-all duration-300 ${
+                  mobileMenuOpen ? "translate-y-2 rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-full rounded-full bg-foreground transition-all duration-300 ${
+                  mobileMenuOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-full rounded-full bg-foreground transition-all duration-300 ${
+                  mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""
+                }`}
+              />
+            </div>
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        <motion.div
+          initial={false}
+          animate={{
+            height: mobileMenuOpen ? "auto" : 0,
+            opacity: mobileMenuOpen ? 1 : 0,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="overflow-hidden md:hidden"
+        >
+          <nav className="flex flex-col gap-1 pb-4 pt-4">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+            <Link
+              href="#"
+              onClick={() => {
+                setMobileMenuOpen(false);
+              }}
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-warm-orange px-5 py-3 text-sm font-semibold text-white shadow-md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Donar
+            </Link>
+          </nav>
+        </motion.div>
       </div>
     </header>
   );

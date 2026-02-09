@@ -35,9 +35,9 @@ export default function DynamicNewsList({ initialNews }: DynamicNewsListProps): 
   return (
     <div className="relative">
       {/* Indicador de estado */}
-      <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
+      <div className="mb-6 flex items-center gap-2 text-xs text-muted-foreground">
         <div
-          className={`h-2 w-2 rounded-full ${loading ? "animate-pulse bg-yellow-400" : "bg-green-400"}`}
+          className={`h-1.5 w-1.5 rounded-full ${loading ? "animate-pulse bg-warm-orange" : "bg-earth-green"}`}
         />
         <span>
           {loading ? "Actualizando..." : "Actualizado"}

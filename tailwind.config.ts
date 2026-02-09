@@ -66,6 +66,15 @@ const config = {
           DEFAULT: "hsl(var(--gentle-purple))",
           foreground: "hsl(var(--gentle-purple-foreground))",
         },
+        "earth-green": {
+          DEFAULT: "hsl(var(--earth-green))",
+        },
+        sand: {
+          DEFAULT: "hsl(var(--sand))",
+        },
+        cream: {
+          DEFAULT: "hsl(var(--cream))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
