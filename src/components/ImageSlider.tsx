@@ -171,13 +171,84 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100"
+            className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-gray-100"
           >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="h-8 w-8 rounded-full border-2 border-gray-300 border-t-gray-600"
-            />
+            <motion.svg
+              width="56"
+              height="56"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{
+                duration: 1.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <ellipse
+                cx="28"
+                cy="22"
+                rx="10"
+                ry="14"
+                fill="hsl(25 65% 48%)"
+                transform="rotate(-15 28 22)"
+              />
+              <ellipse
+                cx="72"
+                cy="22"
+                rx="10"
+                ry="14"
+                fill="hsl(25 65% 48%)"
+                transform="rotate(15 72 22)"
+              />
+              <circle cx="50" cy="52" r="28" fill="hsl(25 65% 48%)" />
+              <circle cx="40" cy="46" r="5" fill="white" />
+              <circle cx="60" cy="46" r="5" fill="white" />
+              <circle cx="41.5" cy="47" r="2.5" fill="hsl(20 25% 10%)" />
+              <circle cx="61.5" cy="47" r="2.5" fill="hsl(20 25% 10%)" />
+              <ellipse cx="50" cy="58" rx="5" ry="3.5" fill="hsl(20 25% 10%)" />
+              <motion.ellipse
+                cx="50"
+                cy="61"
+                rx="6"
+                ry="4"
+                fill="hsl(0 72% 51% / 0.6)"
+                animate={{ ry: [4, 5, 4] }}
+                transition={{
+                  duration: 1.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <ellipse
+                cx="33"
+                cy="56"
+                rx="6"
+                ry="4"
+                fill="hsl(25 55% 58%)"
+                opacity="0.5"
+              />
+              <ellipse
+                cx="67"
+                cy="56"
+                rx="6"
+                ry="4"
+                fill="hsl(25 55% 58%)"
+                opacity="0.5"
+              />
+            </motion.svg>
+            <motion.p
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="text-sm font-medium text-gray-400"
+            >
+              Cargando...
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
