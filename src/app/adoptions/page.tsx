@@ -8,6 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { getAdoptions } from "@/db/clientTurso";
 import { getFallbackImage, translateSize } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
+export const revalidate = 0;
+
 async function AnimalsGrid(): Promise<React.JSX.Element> {
   const data: TursoDataResponse = await getAdoptions();
   const animals = data.rows;
@@ -20,7 +24,7 @@ async function AnimalsGrid(): Promise<React.JSX.Element> {
             <Link
               key={animal.id}
               href={`/adoptions/${animal.id}`}
-              className={`card-gradient-border hover-lift group animate-slide-in delay-${index % 6} flex flex-col overflow-hidden rounded-2xl bg-background/80 backdrop-blur-sm transition-all duration-500`}
+              className={`card-gradient-border hover-lift animate-slide-in group delay-${index % 6} flex flex-col overflow-hidden rounded-2xl bg-background/80 backdrop-blur-sm transition-all duration-500`}
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
@@ -68,7 +72,12 @@ async function AnimalsGrid(): Promise<React.JSX.Element> {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -78,7 +87,12 @@ async function AnimalsGrid(): Promise<React.JSX.Element> {
       ) : (
         <div className="space-y-6 py-16 text-center">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-            <svg className="h-10 w-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="h-10 w-10 text-primary"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -116,7 +130,8 @@ export default function Adoptions(): React.JSX.Element {
             Animales en <span className="text-gradient">adopción</span>
           </h1>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Cada uno de estos animales está esperando una familia que les brinde el amor y cuidado que merecen.
+            Cada uno de estos animales está esperando una familia que les brinde el amor y cuidado
+            que merecen.
           </p>
         </div>
 
